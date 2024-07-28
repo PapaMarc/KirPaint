@@ -166,3 +166,11 @@ a:visited {
   border: thin solid #000000;
   margin-bottom: 6px;
 }
+/* Unvisited link */
+a:link {
+  color: orange;
+}
+/* Mouse over link */
+a:hover {
+  color: darkorange;
+}
