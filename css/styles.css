@@ -1,175 +1,168 @@
-﻿body
-{
-	/*Remove below line to make bgimage NOT fixed*/
-background-repeat: no-repeat;
-	background-color: #3333FF;
-	background-image: url('../images/ShowSetAndPropPainting/Feature_DLAnaheimHoney.jpg');
-	background-position: left top;
-	background-attachment: fixed;
+﻿body {
+  /*Remove below line to make bgimage NOT fixed*/
+  background-repeat: no-repeat;
+  background-color: #3333ff;
+  background-image: url("../images/ShowSetAndPropPainting/Feature_DLAnaheimHoney.jpg");
+  background-position: left top;
+  background-attachment: fixed;
 }
-
 
 #footer {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 10px;
-	margin-top: 15px;
-	padding-top: 5px;
-	border-top-width: 3px;
-	border-top-style: dotted;
-	border-top-color: #000000;
-	clear: both;
-	margin-right: auto;
-	margin-left: auto;
-	padding-right: 4px;
-	padding-bottom: 4px;
-	padding-left: 4px;
-	width: 755px;
-	text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  margin-top: 15px;
+  padding-top: 5px;
+  border-top-width: 3px;
+  border-top-style: dotted;
+  border-top-color: #000000;
+  clear: both;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 4px;
+  padding-bottom: 4px;
+  padding-left: 4px;
+  width: 755px;
+  text-align: center;
 }
 bodyd {
-	background-image: url(images/color-fire.jpg);
-	background-color: #000000;
-	background-repeat: no-repeat;
+  background-image: url(images/color-fire.jpg);
+  background-color: #000000;
+  background-repeat: no-repeat;
 }
-
 
 #main {
-				background-image: url('../images/images/trans.png');
-				background-repeat: repeat;
-				padding: 10px;
-				width: 790px;
-				margin-left: auto;
-				margin-top: 3px;
-				border: medium solid #000000;
-				margin-right: auto;
+  background-image: url("../images/images/trans.png");
+  background-repeat: repeat;
+  padding: 10px;
+  width: 790px;
+  margin-left: auto;
+  margin-top: 3px;
+  border: medium solid #000000;
+  margin-right: auto;
 }
 
-	
-
-div#navcontainer
-{
-	background-image: url(images/images/trans.png);
-	border-top-width: 1px;
-	border-bottom-width: 1px;
-	border-top-style: solid;
-	border-bottom-style: solid;
-	border-top-color: #000000;
-	border-bottom-color: #000000;
-	width: 777px;
-	margin-top: 5px;
-	margin-right: auto;
-	margin-left: auto;
+div#navcontainer {
+  background-image: url(images/images/trans.png);
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-top-color: #000000;
+  border-bottom-color: #000000;
+  width: 777px;
+  margin-top: 5px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
-div#navcontainer ul
-{
-font-family: Arial, Helvetica, sans-serif;
-font-weight: bold;
-color: white;
-text-align: left;
-margin: 0;
-padding-bottom: 5px;
-padding-top: 5px;
+div#navcontainer ul {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: white;
+  text-align: left;
+  margin: 0;
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 
-div#navcontainer ul li
-{
-display: inline;
-margin-left: -4px;
+div#navcontainer ul li {
+  display: inline;
+  margin-left: -4px;
 }
 
-div#navcontainer ul li a
-{
-padding: 5px 10px 5px 10px;
-color: white;
-text-decoration: none;
-border-right: 1px solid #000000;
+div#navcontainer ul li a {
+  padding: 5px 10px 5px 10px;
+  color: white;
+  text-decoration: none;
+  border-right: 1px solid #000000;
 }
 
-div#navcontainer ul li a:hover
-{
-background-color: #FFFF00;
-color: #000000;
+div#navcontainer ul li a:hover {
+  background-color: #ffff00;
+  color: #000000;
 }
 
-#active a { border-left: 1px solid #000000; }
+#active a {
+  border-left: 1px solid #000000;
+}
 #left {
-	clear: left;
-	float: left;
-	width: 410px;
-	margin-left: 8px;
-	padding-top: 5px;
-	padding-right: 5px;
-	padding-bottom: 5px;
-	padding-left: 5px;
+  clear: left;
+  float: left;
+  width: 410px;
+  margin-left: 8px;
+  padding-top: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
 }
 
-ul#navlist li a:hover
-{
-	color: #999999;
+ul#navlist li a:hover {
+  color: #999999;
 }
 
 .text {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #FFFFFF;
-}.heading {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 32px;
-	font-weight: bold;
-	color: #6C0E51;
-	line-height: 37px;
-	background-color: #FFFFFF;
-	padding-left: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #ffffff;
+}
+.heading {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 32px;
+  font-weight: bold;
+  color: #6c0e51;
+  line-height: 37px;
+  background-color: #ffffff;
+  padding-left: 5px;
 }
 .h2 {
-	font-size: 13px;
-	color: #FFFF00;
-	line-height: 20px;
+  font-size: 13px;
+  color: #ffff00;
+  line-height: 20px;
 }
 #title {
-	width: 775px;
-	margin-right: auto;
-	margin-left: auto;
+  width: 775px;
+  margin-right: auto;
+  margin-left: auto;
 }
 #right {
-	padding: 5px;
-	clear: right;
-	float: right;
-	width: 250px;
-	margin-right: 8px;
+  padding: 5px;
+  clear: right;
+  float: right;
+  width: 250px;
+  margin-right: 8px;
 }
 .picbord {
-	border: 3px solid #000000;
-	clear: left;
-	float: left;
-	margin-right: 6px;
-	margin-bottom: 6px;
+  border: 3px solid #000000;
+  clear: left;
+  float: left;
+  margin-right: 6px;
+  margin-bottom: 6px;
 }
 #right a {
-	color: #CC9900;
-	line-height: 17px;
-	text-decoration: none;
+  color: #cc9900;
+  line-height: 17px;
+  text-decoration: none;
 }
-#right a:link, a:visited {
-	color: #CC9900;
-	line-height: 17px;
-	text-decoration: none;
+#right a:link,
+a:visited {
+  color: #cc9900;
+  line-height: 17px;
+  text-decoration: none;
 }
 #right a:hover {
-	color: #CC9900;
-	line-height: 17px;
-	text-decoration: underline;
+  color: #cc9900;
+  line-height: 17px;
+  text-decoration: underline;
 }
 .subhead {
-	font-size: 16px;
-	font-weight: bolder;
-	color: #FFFF00;
-	text-transform: uppercase;
+  font-size: 16px;
+  font-weight: bolder;
+  color: #ffff00;
+  text-transform: uppercase;
 }
 .lpic {
-	clear: right;
-	float: right;
-	border: thin solid #000000;
-	margin-bottom: 6px;
+  clear: right;
+  float: right;
+  border: thin solid #000000;
+  margin-bottom: 6px;
 }
