@@ -72,6 +72,13 @@ div#navcontainer ul li {
   margin-left: -4px;
 }
 
+div#navcontainer ul li a img {
+  width: 38px;
+  height: 38px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
 div#navcontainer ul li a {
   padding: 5px 10px 5px 10px;
   color: white;
