@@ -21,7 +21,7 @@
   padding-right: 4px;
   padding-bottom: 4px;
   padding-left: 4px;
-  width: 755px;
+  width: 790px;
   text-align: center;
 }
 bodyd {
@@ -35,22 +35,24 @@ bodyd {
   background-repeat: repeat;
   padding: 10px;
   width: 790px;
-  margin-left: auto;
   margin-top: 3px;
-  border: medium solid #000000;
+  margin-left: auto;
   margin-right: auto;
+  border: medium solid #000000;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
 }
 
 div#navcontainer {
-  background-image: url(images/images/trans.png);
+  background-image: url("../images/images/trans.png");
   border-top-width: 1px;
   border-bottom-width: 1px;
   border-top-style: solid;
   border-bottom-style: solid;
   border-top-color: #000000;
   border-bottom-color: #000000;
-  width: 777px;
-  margin-top: 5px;
+  width: 790px;
+  margin-top: 3px;
   margin-right: auto;
   margin-left: auto;
 }
