@@ -82,6 +82,11 @@ div#navcontainer ul li a:hover {
   color: #000000;
 }
 
+div#navcontainer ul li a.active {
+  background-color: #00ff44;
+  color: #000000;
+}
+
 #active a {
   border-left: 1px solid #000000;
 }
@@ -173,4 +178,7 @@ a:link {
 /* Mouse over link */
 a:hover {
   color: darkorange;
+}
+#navlist a {
+  font-size: 14px; /* or any other desired size */
 }
