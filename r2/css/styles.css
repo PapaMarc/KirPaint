@@ -372,18 +372,18 @@ footer {
 }
 
 /* Fallback caption overlay used when PhotoSwipe events aren't available */
-.r2-pswp-caption{
+.r2-pswp-caption {
   position: fixed;
   left: 50%;
   bottom: 26px;
   transform: translateX(-50%);
   z-index: 13500;
-  background: rgba(255,255,255,0.95);
+  background: rgba(255, 255, 255, 0.95);
   color: #222;
   padding: 10px 14px;
   border-radius: 6px;
   max-width: 92%;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
   text-align: center;
   font-size: 0.95rem;
 }

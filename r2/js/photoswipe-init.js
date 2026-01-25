@@ -67,51 +67,100 @@ document.addEventListener("DOMContentLoaded", function () {
       // initialize PhotoSwipe Lightbox scoped to this page (try/catch in case CDN didn't load)
       var lightbox = null;
       try {
-        lightbox = new (typeof PhotoSwipeLightbox !== 'undefined' ? PhotoSwipeLightbox : window.PhotoSwipeLightbox)({
+        lightbox = new (
+          typeof PhotoSwipeLightbox !== "undefined"
+            ? PhotoSwipeLightbox
+            : window.PhotoSwipeLightbox
+        )({
           dataSource: pswpItems,
-          showHideAnimationType: 'zoom',
+          showHideAnimationType: "zoom",
           // pswpModule: PhotoSwipe // optional; UMD will use global
         });
         lightbox.init();
       } catch (err) {
-        console.warn('PhotoSwipeLightbox init failed:', err);
+        console.warn("PhotoSwipeLightbox init failed:", err);
         lightbox = null;
       }
 
       // Helper: create a simple fallback overlay (framed image + caption + close)
       function showFallbackOverlay(idx, trigger) {
         // remove existing
-        var existingOverlay = document.querySelector('.r2-fallback-overlay');
+        var existingOverlay = document.querySelector(".r2-fallback-overlay");
         if (existingOverlay) existingOverlay.remove();
 
         var item = pswpItems[idx];
-        var overlay = document.createElement('div'); overlay.className = 'r2-fallback-overlay';
-        overlay.style.position = 'fixed'; overlay.style.inset = '0'; overlay.style.display = 'flex'; overlay.style.alignItems = 'center'; overlay.style.justifyContent = 'center'; overlay.style.background = 'rgba(0,0,0,0.85)'; overlay.style.zIndex = '14000';
+        var overlay = document.createElement("div");
+        overlay.className = "r2-fallback-overlay";
+        overlay.style.position = "fixed";
+        overlay.style.inset = "0";
+        overlay.style.display = "flex";
+        overlay.style.alignItems = "center";
+        overlay.style.justifyContent = "center";
+        overlay.style.background = "rgba(0,0,0,0.85)";
+        overlay.style.zIndex = "14000";
 
-        var content = document.createElement('div'); content.style.maxWidth = '92%'; content.style.textAlign = 'center';
-        var img = document.createElement('img'); img.src = item.src; img.alt = item.title || ''; img.style.maxWidth = '100%'; img.style.maxHeight = '78vh'; img.style.border = '10px solid #fff'; img.style.borderRadius = '6px'; img.style.boxShadow = '0 20px 50px rgba(0,0,0,0.6)';
-        var cap = document.createElement('div'); cap.className = 'r2-pswp-caption'; cap.innerHTML = item.title || '';
-        var btn = document.createElement('button'); btn.className = 'r2-pswp-close'; btn.innerHTML = '✕'; btn.style.position = 'fixed'; btn.style.top = '18px'; btn.style.right = '18px';
+        var content = document.createElement("div");
+        content.style.maxWidth = "92%";
+        content.style.textAlign = "center";
+        var img = document.createElement("img");
+        img.src = item.src;
+        img.alt = item.title || "";
+        img.style.maxWidth = "100%";
+        img.style.maxHeight = "78vh";
+        img.style.border = "10px solid #fff";
+        img.style.borderRadius = "6px";
+        img.style.boxShadow = "0 20px 50px rgba(0,0,0,0.6)";
+        var cap = document.createElement("div");
+        cap.className = "r2-pswp-caption";
+        cap.innerHTML = item.title || "";
+        var btn = document.createElement("button");
+        btn.className = "r2-pswp-close";
+        btn.innerHTML = "✕";
+        btn.style.position = "fixed";
+        btn.style.top = "18px";
+        btn.style.right = "18px";
 
-        content.appendChild(img); content.appendChild(cap); overlay.appendChild(content); document.body.appendChild(overlay); document.body.appendChild(btn);
+        content.appendChild(img);
+        content.appendChild(cap);
+        overlay.appendChild(content);
+        document.body.appendChild(overlay);
+        document.body.appendChild(btn);
 
-        function cleanup() { try { overlay.remove(); } catch(e){} try { btn.remove(); } catch(e){} try { trigger && trigger.focus(); } catch(e){} }
-        btn.addEventListener('click', cleanup);
-        overlay.addEventListener('click', function(e){ if (e.target === overlay) cleanup(); });
+        function cleanup() {
+          try {
+            overlay.remove();
+          } catch (e) {}
+          try {
+            btn.remove();
+          } catch (e) {}
+          try {
+            trigger && trigger.focus();
+          } catch (e) {}
+        }
+        btn.addEventListener("click", cleanup);
+        overlay.addEventListener("click", function (e) {
+          if (e.target === overlay) cleanup();
+        });
       }
 
       // open on thumbnail click at correct index and remember trigger for focus return
-      galleryEl.addEventListener('click', function (e) {
-        var a = e.target.closest('a.thumb-link');
+      galleryEl.addEventListener("click", function (e) {
+        var a = e.target.closest("a.thumb-link");
         if (!a) return;
         e.preventDefault();
         var idx = Number(a.dataset.index) || 0;
         // if PhotoSwipe initialized, open it
         if (lightbox) {
-          try { lightbox._lastTrigger = a; lightbox.loadAndOpen(idx); } catch (err) { console.warn('lightbox open failed', err); showFallbackOverlay(idx,a); }
+          try {
+            lightbox._lastTrigger = a;
+            lightbox.loadAndOpen(idx);
+          } catch (err) {
+            console.warn("lightbox open failed", err);
+            showFallbackOverlay(idx, a);
+          }
         } else {
           // fallback overlay if lightbox not available
-          showFallbackOverlay(idx,a);
+          showFallbackOverlay(idx, a);
         }
       });
     })
