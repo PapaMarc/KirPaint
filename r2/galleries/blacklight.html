@@ -1,56 +1,114 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Blacklight Gallery — KirPaint (r2)</title>
     <link rel="stylesheet" href="/r2/css/styles.css">
     <style>
-      .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-      .thumb{background:white;border-radius:8px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,0.08)}
-      .thumb img{width:100%;height:200px;object-fit:cover;display:block}
-      .thumb .caption{padding:10px;font-size:0.95rem;color:var(--muted)}
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px
+        }
 
-      /* simple lightbox */
-      .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:1200}
-      .lightbox.active{display:flex}
-      .lightbox img{max-width:90%;max-height:85%;border-radius:4px}
-      .lightbox .meta{color:white;margin-top:12px;text-align:center;max-width:90%}
-      .lightbox .close{position:absolute;top:20px;right:24px;color:white;font-size:28px;background:none;border:0}
+        .thumb {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08)
+        }
+
+        .thumb img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block
+        }
+
+        .thumb .caption {
+            padding: 10px;
+            font-size: 0.95rem;
+            color: var(--muted)
+        }
+
+        /* simple lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1200
+        }
+
+        .lightbox.active {
+            display: flex
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 85%;
+            border-radius: 4px
+        }
+
+        .lightbox .meta {
+            color: white;
+            margin-top: 12px;
+            text-align: center;
+            max-width: 90%
+        }
+
+        .lightbox .close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            color: white;
+            font-size: 28px;
+            background: none;
+            border: 0
+        }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <nav class="topnav">
-      <div class="container nav-inner">
-        <a class="logo" href="/r2/">KirPaint</a>
-        <a class="logo" href="/r2/index.html">← Back</a>
-      </div>
+        <div class="container nav-inner">
+            <a class="logo" href="/r2/">KirPaint</a>
+            <a class="logo" href="/r2/index.html">← Back</a>
+        </div>
     </nav>
 
-    <header class="hero-hero" style="background-image:url('/images/BlacklightPainting/crop/Feature_TDSJourneyMushroom_Crop.jpg')">
-      <div class="container">
-        <h1>Blacklight Gallery</h1>
-        <p class="lead">A selection of UV and blacklight-reactive work.</p>
-      </div>
+    <header class="hero-hero"
+        style="background-image:url('/images/BlacklightPainting/crop/Feature_TDSJourneyMushroom_Crop.jpg')">
+        <div class="container">
+            <h1>Blacklight Gallery</h1>
+            <p class="lead">A selection of UV and blacklight-reactive work.</p>
+        </div>
     </header>
 
     <main>
-      <section>
-        <div class="container">
-          <h2>Images</h2>
-          <div id="gallery" class="gallery-grid"></div>
-        </div>
-      </section>
+        <section>
+            <div class="container">
+                <h2>Images</h2>
+                <div id="gallery" class="gallery-grid"></div>
+            </div>
+        </section>
     </main>
 
     <div id="lightbox" class="lightbox" role="dialog" aria-hidden="true">
-      <button class="close" aria-label="Close">✕</button>
-      <div class="lightbox-content">
-        <img id="lb-img" src="" alt="">
-        <div class="meta"><div id="lb-caption"></div></div>
-      </div>
+        <button class="close" aria-label="Close">✕</button>
+        <div class="lightbox-content">
+            <img id="lb-img" src="" alt="">
+            <div class="meta">
+                <div id="lb-caption"></div>
+            </div>
+        </div>
     </div>
 
     <script src="/r2/js/gallery.js"></script>
-  </body>
-  </html>
+</body>
+
+</html>

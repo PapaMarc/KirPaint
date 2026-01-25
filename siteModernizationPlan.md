@@ -283,4 +283,6 @@ The `/r2` folder contains the modernized site. The existing site remains untouch
 
 - Optimize images and thumbnails.
 
+-consider Adding an automated generator to precompute and store each gallery image’s intrinsic width/height in `r2/data/<gallery>.json` (via a Node script run whenever images change) so PhotoSwipe can open immediately without runtime size measurements, eliminating extra background loads and speeding initial opens.
+
 - Eventually, when ready to cut over and confident in the new site, i intend to archive the old site and promote `/r2` to root.
