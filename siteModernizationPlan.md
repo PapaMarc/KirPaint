@@ -1,123 +1,159 @@
-📄 siteModernizationPlan.md
-(You can paste this directly into /docs/siteModernizationPlan.md in your KirPaint repo.)
+# KirPaint Site Modernization Plan
 
-KirPaint Site Modernization Plan
-Modernizing KirPaint using the MerWare/OneZeroBit design language and a hybrid single‑page + JSON‑driven gallery architecture.
+A fully modern, mobile‑responsive, maintainable redesign of the KirPaint website using the MerWare/OneZeroBit design language and a hybrid single‑page + JSON‑driven gallery architecture. This version includes the /r2 parallel‑site workflow to ensure the existing site remains untouched during development.
 
-1. Modernization Goals
-   Adopt the clean, responsive, section‑based layout used by MerWare and OneZeroBit.
+## 1. Modernization Goals
 
-Improve mobile rendering and accessibility.
+- Adopt the clean, responsive, section‑based layout used by MerWare and OneZeroBit.
 
-Replace legacy table‑based gallery pages with a JSON‑driven, maintainable gallery system.
+- Improve mobile rendering, accessibility, and performance.
 
-Unify the top‑level KirPaint content (Home, About, Certifications, Galleries Index) into a single modern index.html.
+- Replace legacy table‑based gallery pages with a JSON‑driven, maintainable gallery system.
 
-Keep individual gallery detail pages separate for clarity and performance.
+- Consolidate top‑level KirPaint content (Home, About, Certifications, Galleries Index) into a single modern `index.html`.
 
-Ensure the site is easy to maintain, extend, and regenerate using Copilot in VS Code.
+- Keep individual gallery detail pages separate for clarity and performance.
 
-2. High‑Level Architecture
-   Hybrid Model (Recommended)
-   Single‑page sections inside index.html:
+- Build the new site inside a parallel `/r2` folder to avoid modifying the existing site.
 
-Hero
+- Reuse the existing `/images/...` folders for gallery content.
 
-About
+- Ensure the site is easy to maintain, extend, and regenerate using Copilot in VS Code.
 
-Certifications
+## 2. High‑Level Architecture
 
-Galleries Index (grid of gallery categories)
+### Hybrid Model (Recommended)
 
-Contact
+#### Single‑page sections inside `/r2` `/index.html`:
 
-Footer
+- Hero
 
-Separate gallery detail pages:
+- Galleries Index (grid of gallery categories)
 
-/galleries/blacklight.html
+- Certifications
 
-/galleries/murals.html
+- About
 
-/galleries/industrial.html
+- Contact
 
-etc.
+- Footer
 
-JSON‑driven image data for each gallery category.
+#### Separate gallery detail pages inside `/r2/galleries/`:
 
-3. Template Structure (Abstracted from MerWare/OneZeroBit)
-Page Layout Pattern
-Code
+- `/r2/galleries/blacklight.html`
+
+- `/r2/galleries/murals.html`
+
+- `/r2/galleries/industrial.html`
+
+- etc.
+
+#### JSON‑driven image data inside `/r2/data/`:
+
+- `/r2/data/blacklight.json`
+
+- `/r2/data/murals.json`
+
+- `/r2/data/industrial.json`
+
+The new site uses the existing `/images/...` folders as the source of gallery images.
+
+## 3. Template Structure (Abstracted from MerWare/OneZeroBit)
+
+### Page Layout Pattern
+
+```
 <section class="hero">...</section>
 <section class="content-two-col">...</section>
 <section class="feature-grid">...</section>
 <section class="gallery-index">...</section>
 <section class="callout">...</section>
 <footer>...</footer>
-Design System Notes
-Mobile‑first responsive layout
+```
 
-80–120px vertical spacing between sections
+### Design System Notes
 
-Typography scale: large hero → h2 → h3 → body
+- Mobile‑first responsive layout.
 
-Cards use subtle shadows + rounded corners
+- 80–120px vertical spacing between sections.
 
-Consistent container widths
+- Typography scale: large hero → h2 → h3 → body.
 
-Sticky or collapsible mobile navigation
+- Cards use subtle shadows and rounded corners.
 
-Smooth scrolling for anchor links
+- Consistent container widths.
 
-KirPaint‑Specific Adjustments
-Use KirPaint color palette (dark header, light body, accent color)
+- Sticky or collapsible mobile navigation.
 
-Replace MerWare/OneZeroBit logos with KirPaint branding
+- Smooth scrolling for anchor links.
 
-Maintain KirPaint’s existing copyright and Disney disclaimers
+### KirPaint‑Specific Adjustments
 
-4. Section Templates
-Hero Section
-Code
+- Use KirPaint color palette (dark header, light body, accent color).
+
+- Replace MerWare/OneZeroBit logos with KirPaint branding.
+
+- Maintain KirPaint’s existing copyright and Disney disclaimers.
+
+## 4. Section Templates
+
+### Hero Section
+
+```
+
 <section class="hero">
   <div class="container">
     <h1>{{ title }}</h1>
     <p>{{ subtitle }}</p>
   </div>
 </section>
-Two‑Column Section
-Code
+```
+
+### Two‑Column Section
+
+```
+
 <section class="content-two-col">
   <div class="container">
     <div class="left">{{ left_content }}</div>
     <div class="right">{{ right_content }}</div>
   </div>
 </section>
-Feature Grid
-Code
+```
+
+### Feature Grid
+
+```
 <section class="feature-grid">
   <div class="container grid">
     {{ repeat card }}
   </div>
 </section>
-Galleries Index Section
-Grid of gallery categories
+```
 
-Each card links to a gallery detail page
+### Galleries Index Section
 
-Uses thumbnails defined in JSON
+- Grid of gallery categories.
 
-5. JSON‑Driven Gallery Architecture
-   JSON Schema
-   Each gallery category has a JSON file:
+- Each card links to a gallery detail page.
 
-Code
-/data/blacklight.json
-/data/murals.json
-/data/industrial.json
-...
+- Uses thumbnails defined in JSON.
+
+## 5. JSON‑Driven Gallery Architecture
+
+JSON Schema
+
+Each gallery category has a JSON file:
+
+```
+/r2/data/blacklight.json
+/r2/data/murals.json
+/r2/data/industrial.json
+```
+
 JSON Entry Structure
-json
+
+```
 {
 "src": "images/blacklight/001.jpg",
 "thumb": "images/blacklight/thumbs/001.jpg",
@@ -126,105 +162,125 @@ json
 "year": 2023,
 "tags": ["blacklight", "UV", "mural"]
 }
+```
+
 Why this structure
-src: full image for lightbox
 
-thumb: optimized thumbnail for grid
+- `src`: full image for lightbox.
 
-caption: displayed under the image in the lightbox
+- `thumb`: optimized thumbnail for grid.
 
-alt: accessibility + SEO
+- `caption`: displayed under the image in the lightbox.
 
-year and tags: optional metadata for filtering
+- `alt`: accessibility + SEO.
 
-6. Gallery Detail Page Template
-   Each gallery detail page loads its JSON file and renders:
+- `year` and `tags`: optional metadata for filtering.
 
-Hero section with gallery title
+## 6. Gallery Detail Page Template
 
-Responsive image grid
+Each gallery detail page loads its JSON file and renders:
 
-Lightbox viewer (PhotoSwipe recommended)
+- Hero section with gallery title.
 
-Captions displayed under images
+- Responsive image grid.
 
-Optional metadata (year, tags)
+- Lightbox viewer (PhotoSwipe recommended).
+
+- Captions displayed under images.
+
+- Optional metadata (year, tags).
 
 Rendering Logic (Pseudocode)
-js
-fetch('/data/blacklight.json')
+
+```
+fetch('/r2/data/blacklight.json')
 .then(res => res.json())
 .then(images => {
 images.forEach(item => {
 renderThumbnail(item.thumb, item.caption);
 setupLightbox(item.src, item.caption, item.alt);
 });
-}); 7. Folder Structure
-Code
+});
+```
+
+## 7. Folder Structure
+
+```
 /kirpaint
-/css
-/js
-/images
-/blacklight
-/murals
-/industrial
-/thumbs
-/data
-blacklight.json
-murals.json
-industrial.json
-/galleries
-blacklight.html
-murals.html
-industrial.html
-index.html
-contact.html (optional)
-docs/
-siteModernizationPlan.md 8. Mobile Responsiveness
-All sections collapse to single‑column on small screens
+  /images
+  /css
+  /js
+  /galleries
+  index.html
 
-Gallery grid becomes 1‑column or 2‑column
+  /r2
+    index.html
+    /galleries
+      blacklight.html
+      murals.html
+      industrial.html
+      etc
+    /data
+      blacklight.json
+      murals.json
+      industrial.json
+      etc
+    /css
+    /js
 
-Lightbox supports swipe + pinch‑to‑zoom
+  siteModernizationPlan.md
+```
 
-Navigation collapses into hamburger menu
+The `/r2` folder contains the modernized site. The existing site remains untouched.
 
-Typography scales for readability
+## 8. Mobile Responsiveness
 
-9. Copilot Instructions for Page Generation
-   When generating or modifying pages in VS Code:
+- All sections collapse to single‑column on small screens.
 
-Use the Template Structure above
+- Gallery grid becomes 1‑column or 2‑column.
 
-Maintain section spacing and typography scale
+- Lightbox supports swipe + pinch‑to‑zoom.
 
-Use the hybrid architecture (single‑page sections + separate gallery detail pages)
+- Navigation collapses into hamburger menu.
 
-Use JSON files as the source of truth for gallery images
+- Typography scales for readability.
 
-Use KirPaint branding and color palette
+## 9. Copilot Instructions for Page Generation
 
-Ensure mobile responsiveness
+- When generating or modifying pages in VS Code:
 
-Keep code modular and readable
+- Use the Template Structure above.
 
-10. Migration Steps
-    Create index.html using the MerWare/OneZeroBit section layout.
+- Maintain section spacing and typography scale.
 
-Build the About and Certifications sections inside index.html.
+- Use the hybrid architecture (single‑page sections + separate gallery detail pages).
 
-Build the Galleries Index section inside index.html.
+- Use JSON files as the source of truth for gallery images.
 
-Create /data/\*.json files for each gallery category.
+- Use KirPaint branding and color palette.
 
-Create gallery detail pages that load and render JSON.
+- Ensure mobile responsiveness.
 
-Replace old gallery .htm files with the new JSON-driven pages.
+- Keep code modular and readable.
 
-Test mobile responsiveness.
+- Place all new files inside `/r2.`
 
-Optimize images and thumbnails.
+- Do not modify or overwrite existing root‑level files.
 
-Deploy and validate.
+## 10. Migration Steps
 
-End of siteModernizationPlan.md
+- Create `/r2/index.html` using the MerWare/OneZeroBit section layout.
+
+- Build the About and Certifications sections inside `/r2/index.html`.
+
+- Build the Galleries Index section inside `/r2/index.html`.
+
+- reate `/r2/data/*.json` files for each gallery category.
+
+- Create gallery detail pages inside `/r2/galleries/`.
+
+- Test mobile responsiveness.
+
+- Optimize images and thumbnails.
+
+- Eventually, when ready to cut over and confident in the new site, i intend to archive the old site and promote `/r2` to root.
