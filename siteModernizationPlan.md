@@ -1,10 +1,10 @@
 # KirPaint Site Modernization Plan
 
-A fully modern, mobile‑responsive, maintainable redesign of the KirPaint website using the MerWare/OneZeroBit design language and a hybrid single‑page + JSON‑driven gallery architecture. This version includes the /r2 parallel‑site workflow to ensure the existing site remains untouched during development.
+A fully modern, mobile‑responsive, maintainable redesign of the KirPaint website using the MerWare design language and a hybrid single‑page + JSON‑driven gallery architecture. This version includes the /r2 parallel‑site workflow to ensure the existing site remains untouched during development.
 
 ## 1. Modernization Goals
 
-- Adopt the clean, responsive, section‑based layout used by MerWare and OneZeroBit.
+- Adopt the clean, responsive, section‑based layout used by `MerWare.net`
 
 - Improve mobile rendering, accessibility, and performance.
 
@@ -58,7 +58,7 @@ A fully modern, mobile‑responsive, maintainable redesign of the KirPaint websi
 
 The new site uses the existing `/images/...` folders as the source of gallery images.
 
-## 3. Template Structure (Abstracted from MerWare/OneZeroBit)
+## 3. Template Structure (Abstracted from MerWare.net )
 
 ### Page Layout Pattern
 
@@ -91,9 +91,9 @@ The new site uses the existing `/images/...` folders as the source of gallery im
 
 - Use KirPaint color palette (dark header, light body, accent color).
 
-- Replace MerWare/OneZeroBit logos with KirPaint branding.
+- Replace MerWare logos with KirPaint branding.
 
-- Maintain KirPaint’s existing copyright and Disney disclaimers.
+- Maintain KirPaint’s existing copyright and Disney and Universal disclaimers. regarding photo captions, use them verbatim
 
 ## 4. Section Templates
 
@@ -269,7 +269,7 @@ The `/r2` folder contains the modernized site. The existing site remains untouch
 
 ## 10. Migration Steps
 
-- Create `/r2/index.html` using the MerWare/OneZeroBit section layout.
+- Create `/r2/index.html` using the MerWare section layout.
 
 - Build the About and Certifications sections inside `/r2/index.html`.
 
