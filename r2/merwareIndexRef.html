@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MerWare - Software Solutions</title>
+    <link rel="canonical" href="https://merware.net/">
+    +
+    <meta name="description"
+        content="MerWare — software solutions: mobile & desktop apps, data-driven design, and privacy-first engineering.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding-top: 70px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(45, 55, 72, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1rem;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.5) 0%, rgba(118, 75, 162, 0.5) 100%), url('merware/resources/mkwed.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s;
+        }
+
+        header p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            transform: translateY(125%);
+        }
+
+        .cta-button:hover {
+            transform: translateY(calc(125% - 3px));
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        section:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            text-align: center;
+            padding: 40px 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        /* (removed modal styles - using separate pages for portfolio items) */
+
+        .portfolio-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        .portfolio-image img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .portfolio-content {
+            padding: 30px;
+        }
+
+        .portfolio-content h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .portfolio-content p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        /* Anchor for Marc so fragment URLs like #marc focus this element */
+        #marc {
+            scroll-margin-top: 90px;
+        }
+
+        #marc:target {
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.18);
+            transform: translateY(-6px);
+            transition: all 0.25s ease;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Option 4: colored ring to match theme */
+        .team-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            border: 4px solid #667eea;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.18);
+        }
+
+        .team-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .team-member h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .team-member .role {
+            color: #999;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.5) 0%, rgba(118, 75, 162, 0.5) 100%), url('merware/resources/mkwed.jpg') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-attachment: fixed !important;
+            color: white;
+        }
+
+        .contact-section h2 {
+            color: white;
+        }
+
+        .contact-section .section-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .contact-info {
+            font-size: 1.3rem;
+            margin-top: 30px;
+        }
+
+        .contact-info a {
+            color: white;
+            text-decoration: none;
+            border-bottom: 2px solid white;
+        }
+
+        /* Footer */
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            header p {
+                font-size: 1.2rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .portfolio-grid,
+            .services-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(45, 55, 72, 0.98);
+                width: 100%;
+                padding: 20px;
+                gap: 20px;
+                transition: left 0.3s;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="container">
+            <a href="#page-top" class="logo">MerWare</a>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
+        </div>
+    </nav>
+
+    <!-- Header / Hero Section -->
+    <header id="page-top">
+        <div class="container">
+            <h1>Welcome to MerWare</h1>
+            <p>Thanks for visiting.</p>
+            <a href="#portfolio" class="cta-button">LET'S GET STARTED</a>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <h2>SERVICES</h2>
+            <p class="section-subtitle">End-user focused, agile development, strategic software solutions creator.
+                <br>Our
+                deliverables delight!
+            </p>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
+                    <h3>Mobile & Desktop Apps</h3>
+                    <p>We build applications from the ground up that empower people, and expand the mind.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🎯</div>
+                    <h3>Data-driven user first design</h3>
+                    <p>We build secure, data‑driven experiences where privacy and usability go hand in hand. Our UX and
+                        UI are shaped by real engagement insights and proven design patterns, ensuring every decision
+                        balances scalability, trust, and user delight.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🔒</div>
+                    <h3>Privacy</h3>
+                    <p>We treat user data with the highest level of care. Every piece of information entrusted to us is
+                        handled securely, used only for its intended purpose, and protected by industry‑standard
+                        safeguards. We never compromise on privacy, and we are committed to transparency,
+                        accountability, and continuous improvement in how we protect the people who rely on us.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- (portfolio modals removed — using separate pages) -->
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+        <div class="container">
+            <h2>PORTFOLIO</h2>
+            <p class="section-subtitle">Some of our top featured projects.</p>
+            <p class="section-subtitle" style="margin-top: -40px; font-style: italic;">(click the pics for further
+                details)
+            </p>
+
+            <div class="portfolio-grid">
+                <a class="portfolio-item" href="merware/kaprekar.html">
+                    <div class="portfolio-image"><img src="merware/resources/kaprekarapp.png" alt="KaprekarApp"></div>
+                    <div class="portfolio-content">
+                        <h3>KaprekarApp</h3>
+                        <p>KaprekarApp is a free, cross platform Windows Store and Android/Google PlayStore app which
+                            puts Kaprekar's algorithm at your fingertips. It's built on .Net and and MAUI frameworks
+                            from Microsoft. And it contains an original hard hitting, dirty south, backing audio track.
+                        </p>
+                    </div>
+                </a>
+
+                <a class="portfolio-item" href="../TravOTechnology/index.html">
+                    <div class="portfolio-image"><img src="merware/resources/DiveShop.png" alt="DiveShop.net"></div>
+                    <div class="portfolio-content">
+                        <h3>DiveShop.net</h3>
+                        <p>DiveShop.net is a proven, custom reservation & resource-management dive operator and
+                            aqua-adventure platform running in continuous production since 2002.
+                        </p>
+                    </div>
+                </a>
+
+                <a class="portfolio-item" href="merware/music.html">
+                    <div class="portfolio-image"><img src="merware/resources/hardouthere.jpg" alt="Music"></div>
+                    <div class="portfolio-content">
+                        <h3>Music</h3>
+                        <p>Other tracks we put on digital wax. If you don't know, now you know.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="about">
+        <div class="container">
+            <h2>OUR AMAZING TEAM</h2>
+            <p class="section-subtitle">We're an experienced, hard-working and creative team of developers and other
+                specialists, passionate about what we do. We care a lot about launching the right thing and it shows in
+                every product we deliver.</p>
+            <p class="section-subtitle" style="margin-top: -40px; font-weight: bold;">Building great products starts
+                with talented people.</p>
+
+            <div class="team-grid">
+                <div id="marc" class="team-member">
+                    <div class="team-avatar"><img src="merware/resources/mes.jpg" alt="Marc"></div>
+                    <h3>Marc</h3>
+                    <p class="role">Founder, PM/Dev/&Test (exMSFTpcNerd), Papa, TaiChiPlayer 太极拳, KayakDiver, Mushfaker
+                        & tinker/QuietGames'er</p>
+                    <p>Passionate software engineering manager with a wealth of experience designing and delivering
+                        innovative solutions.
+                    </p><br></br>
+                    <p>
+
+                        Marc Seinfeld is a security innovator, and creative technologist with a career spanning more
+                        than two decades at Microsoft. He played a pivotal role leading teams and driving their
+                        formative work
+                        in global corporate email systems, mobile connectivity and core antivirus protection technology,
+                        resulting in <a
+                            href="https://patentscope.wipo.int/search/en/result.jsf?_qid=7f648cb5-c1a2-44c8-ab56-98adbbed6d97">ample
+                            global Patent filings</a>.
+                        These in turn have been
+                        <a href="https://scholar.google.com/citations?hl=en&user=-8J17sAAAAAJ">cited thousands of
+                            times</a> in
+                        subsequent
+                        domain related filings (additional <a
+                            href="https://typeset.io/authors/marc-e-seinfeld-2azhxt5bbj">SCISPACE
+                            citations reference</a>). The core AV team he founded, along with the security
+                        technology they pursued, continues to provide a foundational role securing hundreds of
+                        millions of <a
+                            href="https://www.windowscentral.com/more-14-billion-devices-now-run-windows-11-or-10">(recent
+                            tallies acrrue ~1.4B)</a> Windows workstations. Further, backend integration extends the
+                        protective impact
+                        to countless
+                        additional users across Microsoft's major global cloud services, including Outlook.com,
+                        OneDrive, and Azure.
+                        <br></br>
+                        Today, Marc serves as the Director of Business Operations and
+                        Shop
+                        Foreman for <a href="https://kirpaint.com/about.htm" target="_blank">KirPaint, Inc.</a>
+                        <br></br>
+
+                        He holds a B.A. in Economics from Duke University, where he
+                        also rowed bow seat for their <a href="/marc/DukeCrew.htm">lightweight
+                            8 crew</a>. He's an avid diver having logged over 300 dives, or more than 9
+                        days bottom time beneath seawater. In the time honored tradition of shade tree mechanic, he can
+                        often be found
+                        tinkering on his <a href="/marc/53ChevPU.htm">daily driver</a>, or in
+                        recent
+                        months <a href="/marc/MarcsProducts.htm#coffee-espresso-ritual">pulling a shot of espresso</a>.
+                        <br></br>
+                    <p>**Global impact, local focus, and an enduring drive to build what’s next... along with knowing
+                        sometimes
+                        that requires rebuilding something timeless.**</p>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>CONTACT US</h2>
+            <p class="section-subtitle">Curious to dive deeper? We'd love to hear from you, and see what's on your mind.
+            </p>
+
+            <div class="contact-info">
+                <p>To connect mailTo: marc((at))merware((dot))com OR marcse((at))exMSFT((dot))com OR
+                    mseinfeld((at))alumni((dot))duke((dot))edu</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Copyright © MerWare 2025-2026</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuToggle.addEventListener('click', function () {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function () {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Portfolio items link to separate pages (no in-page modals)
+    </script>
+</body>
+
+</html>

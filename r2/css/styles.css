@@ -1,0 +1,77 @@
+/* MerWare-inspired site styles adapted for KirPaint r2 */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --max-width:1200px;
+  --accent:#667eea;
+  --accent-2:#764ba2;
+  --bg:#f8f9fa;
+  --muted:#666;
+  --dark:#222;
+}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;line-height:1.6;color:var(--dark);background:var(--bg);padding-top:70px}
+.container{max-width:var(--max-width);margin:0 auto;padding:0 20px}
+
+/* Navigation Bar */
+nav.topnav{position:fixed;top:0;left:0;right:0;background:rgba(45,55,72,0.95);backdrop-filter:blur(6px);padding:12px 0;z-index:1000}
+nav.topnav .container{display:flex;align-items:center;justify-content:space-between}
+.logo{color:white;font-weight:700;text-decoration:none;font-size:1.25rem}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{color:white;text-decoration:none;font-weight:500}
+.mobile-menu-toggle{display:none;background:none;border:0;color:white;font-size:1.5rem}
+
+/* Header */
+header.hero-hero{background-size:cover;background-position:center;color:white;padding:100px 0;text-align:center}
+header .lead{font-size:1.2rem;margin-top:12px;color:rgba(255,255,255,0.95)}
+.cta-button{display:inline-block;padding:14px 36px;background:white;color:var(--accent);border-radius:40px;text-decoration:none;font-weight:700;margin-top:18px}
+
+section{padding:80px 0}
+section:nth-of-type(even){background:transparent}
+h2{text-align:center;font-size:2rem;margin-bottom:12px;color:var(--accent)}
+.section-subtitle{text-align:center;font-size:1.05rem;color:var(--muted);max-width:900px;margin:0 auto 40px}
+
+/* Services Grid / Certifications */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:32px;margin-top:30px}
+.service-card{background:white;padding:34px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.08);text-align:center}
+.service-card h3{color:var(--accent);margin-bottom:10px}
+
+/* Portfolio / Galleries */
+.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:32px;margin-top:30px}
+.portfolio-item{background:white;border-radius:10px;overflow:hidden;box-shadow:0 8px 26px rgba(0,0,0,0.08);text-decoration:none;color:inherit}
+.portfolio-image{height:250px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center}
+.portfolio-image img{max-width:100%;max-height:100%;object-fit:cover;display:block}
+.portfolio-content{padding:22px}
+.portfolio-content h3{color:var(--accent);margin-bottom:8px}
+.portfolio-content p{color:var(--muted)}
+
+/* Team */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:32px;margin-top:30px}
+.team-member{background:white;padding:28px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.08);text-align:center}
+.team-avatar{width:140px;height:140px;border-radius:50%;margin:0 auto 18px;overflow:hidden;border:4px solid var(--accent);display:flex;align-items:center;justify-content:center}
+.team-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.team-member h3{color:var(--accent);margin-bottom:6px}
+.team-member .role{color:var(--muted);font-style:italic;margin-bottom:12px}
+
+.contact-section{text-align:center;color:white;padding:80px 0;background:linear-gradient(135deg,rgba(102,126,234,0.5) 0%,rgba(118,75,162,0.5) 100%),url('/images/images/header.jpg');background-size:cover;background-position:center}
+.contact-section h2{color:white}
+.contact-info{font-size:1.15rem;margin-top:18px}
+
+footer{background:#2d3748;color:white;text-align:center;padding:26px 0}
+
+/* Responsive */
+@media(max-width:768px){
+  .mobile-menu-toggle{display:block}
+  .nav-links{position:fixed;top:64px;left:-110%;flex-direction:column;background:rgba(45,55,72,0.98);width:100%;padding:20px;gap:18px;transition:left 0.25s}
+  .nav-links.active{left:0}
+  header.hero-hero{padding:70px 0}
+  .portfolio-image{height:200px}
+}
+
+/* Lightbox helpers used by gallery pages */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:1200;padding:24px}
+.lightbox.active{display:flex}
+.lightbox .lightbox-content{display:flex;flex-direction:column;align-items:center;transform:scale(.92);opacity:0;animation:lbZoom .32s ease forwards}
+@keyframes lbZoom{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+.lightbox img{max-width:92%;max-height:78vh;border:10px solid #fff;border-radius:6px;box-shadow:0 20px 50px rgba(0,0,0,0.6);background:#fff;display:block}
+.lightbox .meta{color:#fff;margin-top:12px;text-align:center;max-width:96%;padding:10px 14px;background:rgba(0,0,0,0.45);border-radius:6px}
+.lightbox .close{position:absolute;top:16px;right:18px;color:white;font-size:30px;background:none;border:0;cursor:pointer}
+
