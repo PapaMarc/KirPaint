@@ -243,36 +243,36 @@
     })();
 </script>
 
-    <script>
-        // Lightweight case-insensitive fragment handler so both #Marc and #marc work
-        (function () {
-            // Use CSS `scroll-margin-top` on .team-member for header offset.
-            // This function finds a target case-insensitively, scrolls to it using
-            // `scrollIntoView` (which respects scroll-margin-top in modern browsers),
-            // and then normalizes the URL to the canonical element id.
-            function handleFragment(hash) {
-                if (!hash) return;
-                const raw = hash.replace(/^#/, '');
-                if (!raw) return;
+<script>
+    // Lightweight case-insensitive fragment handler so both #Marc and #marc work
+    (function () {
+        // Use CSS `scroll-margin-top` on .team-member for header offset.
+        // This function finds a target case-insensitively, scrolls to it using
+        // `scrollIntoView` (which respects scroll-margin-top in modern browsers),
+        // and then normalizes the URL to the canonical element id.
+        function handleFragment(hash) {
+            if (!hash) return;
+            const raw = hash.replace(/^#/, '');
+            if (!raw) return;
 
-                // If exact id exists, normalize URL to that id (ensures canonical case)
-                let target = document.getElementById(raw);
-                if (target) {
-                    try { history.replaceState(null, '', '#' + target.id); } catch (e) {}
-                    return;
-                }
-
-                // Find case-insensitive match
-                target = Array.from(document.querySelectorAll('[id]')).find(e => e.id.toLowerCase() === raw.toLowerCase());
-                if (target) {
-                    target.scrollIntoView({ behavior: 'auto', block: 'start' });
-                    try { history.replaceState(null, '', '#' + target.id); } catch (e) {}
-                }
+            // If exact id exists, normalize URL to that id (ensures canonical case)
+            let target = document.getElementById(raw);
+            if (target) {
+                try { history.replaceState(null, '', '#' + target.id); } catch (e) { }
+                return;
             }
 
-            window.addEventListener('hashchange', () => handleFragment(location.hash));
-            document.addEventListener('DOMContentLoaded', () => handleFragment(location.hash));
-        })();
-    </script>
+            // Find case-insensitive match
+            target = Array.from(document.querySelectorAll('[id]')).find(e => e.id.toLowerCase() === raw.toLowerCase());
+            if (target) {
+                target.scrollIntoView({ behavior: 'auto', block: 'start' });
+                try { history.replaceState(null, '', '#' + target.id); } catch (e) { }
+            }
+        }
+
+        window.addEventListener('hashchange', () => handleFragment(location.hash));
+        document.addEventListener('DOMContentLoaded', () => handleFragment(location.hash));
+    })();
+</script>
 
 </html>
