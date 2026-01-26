@@ -170,9 +170,19 @@ h2 {
 /* Team */
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: 1fr; /* single column: full-width tiles */
   gap: 32px;
   margin-top: 30px;
+}
+
+/* anchors placed immediately before team tiles (e.g. <a id="Kirsten"></a>)
+   are zero-height markers — give them a scroll-margin so fragments align */
+.team-grid > a[id] {
+  display: block;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  scroll-margin-top: 90px;
 }
 .team-member {
   background: white;
@@ -180,6 +190,7 @@ h2 {
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   text-align: center;
+  scroll-margin-top: 90px; /* ensure fragment links don't get hidden by fixed nav */
 }
 .team-avatar {
   width: 140px;
@@ -212,15 +223,23 @@ h2 {
   text-align: center;
   color: white;
   padding: 80px 0;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(102, 126, 234, 0.5) 0%,
-      rgba(118, 75, 162, 0.5) 100%
-    ),
-    url("/images/images/header.jpg");
-  background-size: cover;
-  background-position: center;
+  min-height: 220px;
+.contact-section {
+  /* fallback generic rule kept for non-contact sections */
+}
+
+.contact-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* More specific selector so this rule wins in the cascade without !important */
+section#contact.contact-section {
+  text-align: center;
+  color: white;
+  padding: 80px 0;
+  min-height: 220px;
+  background: url('/images/BlacklightPainting/crop/TDSMermaiddetail_Crop.jpg') center/cover no-repeat fixed;
 }
 .contact-section h2 {
   color: white;
