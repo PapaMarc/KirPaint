@@ -210,6 +210,7 @@ h2 {
   display: block;
 }
 .team-member h3 {
+  text-align: center; /* keep team text centered as in non-feature tiles */
   color: var(--accent);
   margin-bottom: 6px;
 }
@@ -217,6 +218,110 @@ h2 {
   color: var(--muted);
   font-style: italic;
   margin-bottom: 12px;
+}
+
+/* Featured team member: image left, text right (Kirsten special feature) */
+.team-member.feature {
+  display: flex;
+  gap: 24px;
+  align-items: stretch; /* make media span the full tile height */
+  padding: 20px;
+  border-left: 6px solid rgba(0, 0, 0, 0.06);
+  text-align: left;
+}
+.team-member.feature .feature-media {
+  flex: 0 0 45%;
+  display: block;
+}
+.team-member.feature .feature-media {
+  /* allow cropping via clip-path; image fills the box */
+  overflow: hidden;
+}
+.team-member.feature {
+  --feature-trim-left: 7%; /* adjustable: amount to trim from left */
+  --feature-trim-right: 8%; /* adjustable: amount to trim from right */
+}
+.team-member.feature .feature-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 8px;
+  object-fit: cover;
+  object-position: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  -webkit-clip-path: inset(0 var(--feature-trim-right) 0 var(--feature-trim-left));
+  clip-path: inset(0 var(--feature-trim-right) 0 var(--feature-trim-left));
+}
+.team-member.feature .feature-content {
+  flex: 1 1 auto;
+  text-align: center; /* keep team text centered as in non-feature tiles */
+  padding: 6px 0;
+}
+.team-member.feature .team-avatar {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 12px auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--accent);
+}
+.team-member.feature .team-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 840px) {
+  .team-member.feature {
+    flex-direction: column;
+  }
+  .team-member.feature .feature-media img {
+    width: 100%;
+    max-width: 100%;
+  }
+  .team-member.feature .team-avatar {
+    width: 84px;
+    height: 84px;
+    margin: 12px 0;
+  }
+}
+
+/* Mobile: ensure featured tile (Kirsten) stacks image above text and image spans full width */
+@media (max-width: 767px) {
+  .team-member.feature {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .team-member.feature .feature-media {
+    width: 100%;
+    flex: none;
+    order: 0;
+    max-height: 50vh;
+    overflow: hidden;
+  }
+
+  .team-member.feature .feature-media img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+    -webkit-clip-path: inset(0 var(--feature-trim-right) 0 var(--feature-trim-left));
+    clip-path: inset(0 var(--feature-trim-right) 0 var(--feature-trim-left));
+    display: block;
+  }
+
+  .team-member.feature .feature-content {
+    order: 1;
+    padding: 12px 0;
+    text-align: center;
+  }
+
+  .team-member.feature .team-avatar {
+    margin-top: 8px;
+  }
 }
 
 .contact-section {
