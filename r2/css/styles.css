@@ -272,6 +272,42 @@ h2 {
   display: block;
 }
 
+/* Centered list helper used under Marc's excerpt */
+.centered-list {
+  text-align: center; /* center the list block under the preceding sentence */
+  margin: 0.5rem 0 1rem;
+}
+.centered-list ul {
+  display: inline-block; /* allow whole list to be centered */
+  margin: 0;
+  padding-left: 1.25rem; /* keep bullets visible */
+  text-align: left; /* left-align items within the centered block */
+}
+.centered-list ul li {
+  margin: 0.25rem 0;
+}
+
+/* Two small square tiles row (inserted between feature and standard member) */
+.team-row-squares {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  align-items: stretch; /* ensure children expand to available height */
+}
+.team-member.small {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 22px;
+  min-height: 300px; /* approximate height so tiles visually match feature */
+  justify-content: flex-start;
+}
+.team-member.small .team-avatar {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 14px;
+}
+
 @media (max-width: 840px) {
   .team-member.feature {
     flex-direction: column;
