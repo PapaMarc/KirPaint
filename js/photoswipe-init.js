@@ -134,6 +134,75 @@ document.addEventListener("DOMContentLoaded", function () {
           try {
             window.__r2_lightbox = lightbox;
           } catch (e) {}
+          // Pending-caption mechanism: record intended index and apply when pswp content is ready
+          var __r2_pending_caption_idx = null;
+          var __r2_pending_caption_timer = null;
+          var __r2_afterSetContent_attached = false;
+          function __r2_markPendingCaption(idx){
+            try{
+              if (typeof idx !== 'number') return;
+              __r2_pending_caption_idx = idx;
+              if (__r2_pending_caption_timer) { try{ clearTimeout(__r2_pending_caption_timer); }catch(e){} __r2_pending_caption_timer = null; }
+              // short fallback: ensure we apply caption within ~800ms if afterSetContent doesn't run
+              __r2_pending_caption_timer = setTimeout(function(){ try{ __r2_applyPendingCaption(); }catch(e){} }, 800);
+            }catch(e){}
+          }
+          function __r2_applyPendingCaption(){
+            try{
+              if (typeof __r2_pending_caption_idx !== 'number') return false;
+              var idx = __r2_pending_caption_idx;
+              __r2_pending_caption_idx = null;
+              if (__r2_pending_caption_timer){ try{ clearTimeout(__r2_pending_caption_timer); }catch(e){} __r2_pending_caption_timer = null; }
+              var ok = false;
+              try{ ok = setCaptionForIndex(idx); }catch(e){ ok = false; }
+              if (!ok){
+                try{ transientCaptionForce(idx); }catch(e){}
+                try{ startShortPolling(1200); }catch(e){}
+              }
+              return ok;
+            }catch(e){ return false; }
+          }
+          function __r2_attachAfterSetContent(){
+            try{
+              if (__r2_afterSetContent_attached) return;
+              var pswpInst = lightbox && lightbox.pswp;
+              if (!pswpInst || typeof pswpInst.on !== 'function') return;
+              try{
+                pswpInst.on('afterSetContent', function(ev){
+                  try{
+                    __r2_applyPendingCaption();
+                  }catch(e){}
+                });
+                __r2_afterSetContent_attached = true;
+              }catch(e){}
+            }catch(e){}
+          }
+          // Lightweight resolver and scheduler: prefer event timing, then small timeout fallback
+          function resolveIndexFromEvent(ev){
+            try{
+              if (ev && typeof ev.index === 'number') return ev.index;
+              if (lightbox && typeof lightbox.getActiveIndex === 'function') return lightbox.getActiveIndex();
+              if (lightbox && lightbox.pswp && typeof lightbox.pswp.getCurrentIndex === 'function') return lightbox.pswp.getCurrentIndex();
+              if (typeof window.__r2_last_open_idx === 'number') return window.__r2_last_open_idx;
+            }catch(e){}
+            return null;
+          }
+
+          function scheduleCaptionUpdate(ev){
+            try{
+              setTimeout(function(){
+                try{
+                  var idx = null;
+                  try{ idx = resolveIndexFromEvent(ev); }catch(e){}
+                  if (idx === null || typeof idx !== 'number'){
+                    try{ var src = findVisibleSrc(); idx = matchSrcToIndex(src); }catch(e){}
+                  }
+                  if (idx === null || idx === -1) idx = (typeof window.__r2_last_open_idx === 'number') ? window.__r2_last_open_idx : 0;
+                  try{ setCaptionForIndex(idx); }catch(e){}
+                }catch(e){}
+              }, 120);
+            }catch(e){}
+          }
           // pre-create the page-level caption so it's available immediately
           try {
             ensureR2PageCaption();
@@ -420,119 +489,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 lightbox.on("open", function (ev) {
                   var idx = null;
                   try {
-                    if (ev && ev.detail && typeof ev.detail.index === "number")
-                      idx = ev.detail.index;
+                    if (ev && ev.detail && typeof ev.detail.index === "number") idx = ev.detail.index;
                     else if (ev && typeof ev.index === "number") idx = ev.index;
                   } catch (e) {}
-                  if (
-                    idx === null &&
-                    typeof window.__r2_last_open_idx === "number"
-                  )
-                    idx = window.__r2_last_open_idx;
+                  if (idx === null && typeof window.__r2_last_open_idx === "number") idx = window.__r2_last_open_idx;
                   if (typeof idx === "number") {
                     window.__r2_last_open_idx = idx;
-                    // immediate set; if it fails (caption node not yet present), retry via several fallbacks
-                    var ok = false;
-                    try {
-                      ok = setCaptionForIndex(idx);
-                    } catch (e) {
-                      ok = false;
-                    }
-                    if (!ok) {
-                      // Ensure native caption node exists (create if needed)
-                      try {
-                        if (window.__r2_ensureNativeCaption)
-                          window.__r2_ensureNativeCaption();
-                      } catch (e) {}
-                      // transient aggressive forcing (fires repeatedly for ~800ms)
-                      try {
-                        transientCaptionForce(idx);
-                      } catch (e) {}
-                      // longer short polling to cover delayed internal swaps
-                      try {
-                        startShortPolling(1600);
-                      } catch (e) {}
-                      // pswp-level MutationObserver to catch creation of caption node
-                      try {
-                        var pswpRoot = document.querySelector(".pswp");
-                        if (pswpRoot) {
-                          var found = false;
-                          var po = new MutationObserver(function (mutList) {
-                            try {
-                              if (setCaptionForIndex(idx)) {
-                                found = true;
-                                try {
-                                  po.disconnect();
-                                } catch (e) {}
-                              }
-                            } catch (e) {}
-                          });
-                          po.observe(pswpRoot, {
-                            childList: true,
-                            subtree: true,
-                          });
-                          // safety timeout
-                          setTimeout(function () {
-                            try {
-                              if (!found) po.disconnect();
-                            } catch (e) {}
-                          }, 1800);
-                        }
-                      } catch (e) {}
-                    }
-
-                    // short-lived MutationObserver: wait for caption node or img to appear, then set and disconnect
-                    try {
-                      var pswpRoot = document.querySelector(".pswp");
-                      if (pswpRoot) {
-                        try {
-                          var container =
-                            pswpRoot.querySelector(".pswp__container");
-                          if (container) {
-                            try {
-                              if (__r2_pswp_container_observer) {
-                                try {
-                                  __r2_pswp_container_observer.disconnect();
-                                } catch (e) {}
-                                __r2_pswp_container_observer = null;
-                              }
-                            } catch (e) {}
-                            var contObserver = new MutationObserver(
-                              function () {
-                                try {
-                                  var src = findVisibleSrc();
-                                  var mi = matchSrcToIndex(src);
-                                  if (mi === -1) mi = idx;
-                                  console.info(
-                                    "r2: container observer detected change; visibleSrc=",
-                                    src,
-                                    "matchedIdx=",
-                                    mi,
-                                  );
-                                  setCaptionForIndex(mi);
-                                } catch (e) {}
-                              },
-                            );
-                            contObserver.observe(container, {
-                              childList: true,
-                              subtree: true,
-                              attributes: true,
-                              attributeFilter: [
-                                "class",
-                                "aria-hidden",
-                                "style",
-                              ],
-                            });
-                            __r2_pswp_container_observer = contObserver;
-                          }
-                        } catch (e) {}
-                        setTimeout(function () {
-                          try {
-                            setCaptionForIndex(idx);
-                          } catch (e) {}
-                        }, 350);
-                      }
-                    } catch (e) {}
+                    try { __r2_markPendingCaption(idx); } catch (e) {}
+                    try { __r2_attachAfterSetContent(); } catch (e) {}
+                    try { setR2GlobalCaption(pswpItems[idx] ? pswpItems[idx].title : ''); showR2GlobalCaption(); } catch (e) {}
+                    try { if (window.__r2_ensureNativeCaption) window.__r2_ensureNativeCaption(); } catch (e) {}
+                    try { scheduleCaptionUpdate({ index: idx }); } catch (e) {}
                   }
                 });
               } catch (e) {}
@@ -540,25 +507,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 lightbox.on("change", function (ev) {
                   var idx = null;
                   try {
-                    if (ev && ev.detail && typeof ev.detail.index === "number")
-                      idx = ev.detail.index;
+                    if (ev && ev.detail && typeof ev.detail.index === "number") idx = ev.detail.index;
                     else if (ev && typeof ev.index === "number") idx = ev.index;
                   } catch (e) {}
-                  if (typeof idx === "number") {
-                    setCaptionForIndex(idx);
-                    transientCaptionForce(idx);
-                    try {
-                      startShortPolling(900);
-                    } catch (e) {}
-                    console.info("r2: change event, idx=", idx);
-                    return;
-                  }
-                  // fallback: map visible src
-                  try {
-                    var src = findVisibleSrc();
-                    var mi = matchSrcToIndex(src);
-                    if (mi !== -1) setCaptionForIndex(mi);
-                  } catch (e) {}
+                  try { if (typeof idx === 'number') __r2_markPendingCaption(idx); } catch(e) {}
+                  try { __r2_attachAfterSetContent(); } catch(e) {}
+                  try { scheduleCaptionUpdate({ index: idx }); } catch (e) {}
                 });
               } catch (e) {}
               try {
