@@ -18,6 +18,47 @@
         document.querySelector(".glightbox-container") ||
         document.querySelector(".glightbox-overlay");
       if (!overlay) return;
+      // Minimal: force caption wrapper to dark translucent bg + white text
+      try {
+        var caps = overlay.querySelectorAll(
+          ".gdesc, .g-desc, .glightbox-desc, .glightbox-description, .gcaption, .gslide-title, .gdesc-inner",
+        );
+        Array.prototype.forEach.call(caps, function (cap) {
+          try {
+            var wrapper =
+              cap.closest(
+                ".gdesc, .gdesc-inner, .glightbox-desc, .glightbox-description, .gcaption",
+              ) || cap;
+            wrapper.style.setProperty(
+              "background",
+              "rgba(0,0,0, 0.45)",
+              "important",
+            );
+            wrapper.style.setProperty(
+              "background-color",
+              "rgba(0, 40, 85, 0.98)",
+              "important",
+            );
+            wrapper.style.setProperty("color", "#fff", "important");
+            wrapper.style.setProperty("box-shadow", "none", "important");
+            wrapper.style.setProperty("border", "none", "important");
+            if (!wrapper.style.padding)
+              wrapper.style.setProperty("padding", "6px 8px", "important");
+            if (!wrapper.style.borderRadius)
+              wrapper.style.setProperty("border-radius", "6px", "important");
+            cap.style.setProperty("background", "transparent", "important");
+            cap.style.setProperty("color", "#fff", "important");
+            Array.prototype.forEach.call(
+              cap.querySelectorAll("a"),
+              function (a) {
+                try {
+                  a.style.setProperty("color", "#fff", "important");
+                } catch (e) {}
+              },
+            );
+          } catch (e) {}
+        });
+      } catch (e) {}
       // allow horizontal gestures
       try {
         overlay.style.touchAction = overlay.style.touchAction || "none";
