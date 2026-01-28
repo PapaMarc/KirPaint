@@ -134,75 +134,6 @@ document.addEventListener("DOMContentLoaded", function () {
           try {
             window.__r2_lightbox = lightbox;
           } catch (e) {}
-          // pre-create the page-level caption so it's available immediately
-          try {
-            ensureR2PageCaption();
-            console.info("r2: precreated page-level caption");
-          } catch (e) {}
-          // resilient, page-level caption element as a fallback when native caption isn't present
-          var __r2_page_caption_el = null;
-          function ensureR2PageCaption() {
-            try {
-              if (__r2_page_caption_el) return __r2_page_caption_el;
-              var el = document.createElement("div");
-              el.className = "r2-pswp-caption-outer";
-              el.style.position = "fixed";
-              el.style.left = "50%";
-              el.style.transform = "translateX(-50%)";
-              el.style.bottom = "18px";
-              el.style.zIndex = "14001";
-              el.style.pointerEvents = "none";
-              el.style.maxWidth = "92%";
-              el.style.display = "none";
-
-              var inner = document.createElement("div");
-              inner.className = "r2-pswp-caption";
-              inner.style.pointerEvents = "auto";
-              inner.style.background = "rgba(0,0,0,0.72)";
-              inner.style.color = "#fff";
-              inner.style.padding = "10px 14px";
-              inner.style.borderRadius = "8px";
-              inner.style.boxShadow = "0 8px 30px rgba(0,0,0,0.45)";
-              inner.style.fontSize = "15px";
-              inner.style.lineHeight = "1.3";
-              inner.style.textAlign = "center";
-              inner.style.maxWidth = "100%";
-              inner.style.overflow = "hidden";
-              inner.style.textOverflow = "ellipsis";
-              inner.style.whiteSpace = "nowrap";
-
-              el.appendChild(inner);
-              document.body.appendChild(el);
-              __r2_page_caption_el = el;
-              return __r2_page_caption_el;
-            } catch (e) {
-              return null;
-            }
-          }
-          function setR2PageCaption(text) {
-            try {
-              var el = ensureR2PageCaption();
-              if (!el) return false;
-              var inner = el.querySelector(".r2-pswp-caption");
-              if (!inner) return false;
-              inner.textContent = text || "";
-              return true;
-            } catch (e) {
-              return false;
-            }
-          }
-          function showR2PageCaption() {
-            try {
-              var el = ensureR2PageCaption();
-              if (el) el.style.display = "block";
-            } catch (e) {}
-          }
-          function hideR2PageCaption() {
-            try {
-              var el = ensureR2PageCaption();
-              if (el) el.style.display = "none";
-            } catch (e) {}
-          }
           var __r2_poll_handle = null;
           function startShortPolling(durationMs) {
             try {
@@ -382,31 +313,10 @@ document.addEventListener("DOMContentLoaded", function () {
               if (!pswpEl) return false;
               var capCenter = pswpEl.querySelector(".pswp__caption__center");
               var cap = capCenter || pswpEl.querySelector(".pswp__caption");
+              if (!cap) return false;
               var newTitle = pswpItems[i] ? pswpItems[i].title || "" : "";
-              console.info(
-                "r2:setCaptionForIndex called idx=",
-                i,
-                "nativeCaptionFound=",
-                !!cap,
-                "title=",
-                newTitle,
-              );
-              if (cap) {
-                if ((cap.innerHTML || "") !== newTitle)
-                  cap.innerHTML = newTitle;
-                // hide page-level caption if native used
-                try {
-                  hideR2PageCaption();
-                } catch (e) {}
-                return true;
-              }
-              // native caption not found — use resilient page-level caption overlay
-              try {
-                setR2PageCaption(newTitle);
-                showR2PageCaption();
-                console.info("r2:using page-level caption for idx=", i);
-              } catch (e) {}
-              return false;
+              if ((cap.innerHTML || "") !== newTitle) cap.innerHTML = newTitle;
+              return true;
             } catch (e) {
               return false;
             }
@@ -545,10 +455,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     else if (ev && typeof ev.index === "number") idx = ev.index;
                   } catch (e) {}
                   if (typeof idx === "number") {
-                    setCaptionForIndex(idx);
+                    var ok = setCaptionForIndex(idx);
                     transientCaptionForce(idx);
                     try {
                       startShortPolling(900);
+                    } catch (e) {}
+                    try {
+                      if (!ok) {
+                        setR2PageCaption(
+                          pswpItems[idx] ? pswpItems[idx].title || "" : "",
+                        );
+                        showR2PageCaption();
+                      }
                     } catch (e) {}
                     console.info("r2: change event, idx=", idx);
                     return;
@@ -568,6 +486,9 @@ document.addEventListener("DOMContentLoaded", function () {
                       __r2_pswp_container_observer.disconnect();
                       __r2_pswp_container_observer = null;
                     }
+                  } catch (e) {}
+                  try {
+                    hideR2PageCaption();
                   } catch (e) {}
                 });
               } catch (e) {}

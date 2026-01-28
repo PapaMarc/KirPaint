@@ -531,6 +531,46 @@ footer {
   cursor: pointer;
 }
 
+/* Make Photoswipe close control visible and touch-friendly */
+.pswp__button--close,
+.pswp__ui__button--close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.45) !important;
+  color: #fff !important;
+  border-radius: 8px;
+  z-index: 14050 !important;
+  opacity: 1 !important;
+}
+
+/* Improve caption contrast and readability on all viewports */
+.pswp__caption,
+.pswp__caption__center,
+.r2-pswp-caption {
+  background: rgba(0,0,0,0.6) !important;
+  color: #fff !important;
+}
+
+/* Reserve vertical space so tall images leave room for captions/controls */
+.pswp__scroll-wrap {
+  padding-bottom: 80px !important;
+}
+
+.pswp__img,
+.pswp__zoom-wrap img {
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  max-height: calc(100vh - 120px);
+}
+
 /* Fallback caption overlay used when PhotoSwipe events aren't available */
 .r2-pswp-caption {
   position: fixed;
@@ -547,3 +587,129 @@ footer {
   text-align: center;
   font-size: 0.95rem;
 }
+
+/* Emergency PhotoSwipe overrides to ensure UI/captions are visible */
+.pswp, .pswp__ui {
+  z-index: 14000 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.pswp__caption, .pswp__caption__center, .r2-pswp-caption {
+  background: rgba(0,0,0,0.65) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35) !important;
+}
+.pswp__button--close, .pswp__ui__button--close, .r2-pswp-close {
+  display: inline-flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background: rgba(0,0,0,0.55) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35) !important;
+}
+
+/* If other rules hide caption by positioning off-screen, force it into view */
+.pswp__caption { position: absolute !important; left: 0; right: 0; bottom: 12px !important; }
+
+/* Stronger overrides: ensure captions and close control render above the image frame */
+.pswp__ui { z-index: 16000 !important; }
+.pswp__caption, .pswp__caption__center, .r2-pswp-caption { z-index: 16100 !important; }
+.pswp__button--close, .pswp__ui__button--close, .r2-pswp-close { z-index: 16200 !important; }
+
+/* Ensure caption text is fully opaque white and large enough to read */
+.pswp__caption__center, .r2-pswp-caption { color: #ffffff !important; opacity: 1 !important; }
+.pswp__caption__center { font-size: 1rem !important; }
+
+/* Ensure the close button icon is visible (SVG or pseudo-elements) */
+.pswp__button--close svg, .pswp__ui__button--close svg {
+  fill: #fff !important;
+  stroke: #fff !important;
+}
+
+/* If the image wrapper uses higher stacking, keep it lower than UI */
+.pswp__img, .pswp__zoom-wrap { z-index: 15000 !important; }
+
+/* If caption is clipped by overflow, remove overflow on container */
+.pswp__ui, .pswp__scroll-wrap { overflow: visible !important; }
+
+/* Emergency: ensure PhotoSwipe overlay captures clicks and renders its background and UI above the page */
+.pswp {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 20000 !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.pswp * {
+  pointer-events: auto !important;
+}
+.pswp__bg {
+  background: rgba(0,0,0,0.86) !important;
+  opacity: 1 !important;
+  z-index: 20010 !important;
+}
+.pswp__ui {
+  z-index: 20020 !important;
+  pointer-events: auto !important;
+}
+.pswp__caption, .pswp__caption__center, .r2-pswp-caption {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 14px !important;
+  margin: 0 auto !important;
+  max-width: 96% !important;
+  background: rgba(0,0,0,0.72) !important;
+  color: #fff !important;
+  padding: 10px 14px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45) !important;
+  text-align: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.pswp__button--close, .pswp__ui__button--close, .r2-pswp-close {
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  width: 44px !important;
+  height: 44px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(0,0,0,0.6) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35) !important;
+  z-index: 20030 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.pswp__button--close svg, .pswp__ui__button--close svg { fill: #fff !important; stroke: #fff !important; }
+
+/* keep images underneath UI so captions and controls remain tappable */
+.pswp__img, .pswp__zoom-wrap { z-index: 19900 !important; }
+
+/* Strong final override: ensure native PhotoSwipe captions render solid and in the foreground */
+.pswp__caption, .pswp__caption__center {
+  background: rgba(0,0,0,0.86) !important;
+  color: #fff !important;
+  padding: 10px 14px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45) !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 14px !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+  z-index: 30000 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Using PhotoSwipe native captions */
