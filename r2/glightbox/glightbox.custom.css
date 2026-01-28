@@ -1,0 +1,52 @@
+/* Custom GLightbox overrides and counter styling */
+
+/* Counter: top-left, visually aligned with close button at top-right */
+.glightbox-counter {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  z-index: 100020 !important;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+}
+
+/* Keep close button visible at top-right (do not alter GLightbox default layout) */
+.gbtn-close {
+  position: fixed !important;
+  top: 10px !important;
+  right: 10px !important;
+  z-index: 100030 !important;
+}
+
+/* Thin-line icon style for consistency */
+.gbtn svg,
+.gbtn-close svg {
+  stroke-width: 1.6;
+  stroke: currentColor;
+  fill: none;
+}
+
+/* Allow horizontal swipe gestures and avoid intercepting touches */
+.glightbox-container,
+.glightbox-overlay,
+.gslide-inner,
+.gslide {
+  touch-action: pan-y; /* allow horizontal pans for swipe */
+  -ms-touch-action: pan-y;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Ensure overlay children allow pointer events (do not block gestures) */
+.glightbox-container > *,
+.glightbox-overlay > * {
+  pointer-events: auto;
+}
