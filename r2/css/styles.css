@@ -67,7 +67,7 @@ nav.topnav .container {
   font-weight: 500;
 }
 .mobile-menu-toggle {
-  display: none;
+  display: none; /* default: hidden unless mobile media query shows it */
   background: none;
   border: 0;
   color: white;
@@ -408,75 +408,101 @@ footer {
 
 /* Responsive */
 
-/* Mobile / hamburger navigation */
-/* Keep breakpoint in sync with r2/js/main.js (800px) */
-/* Show the toggle, hide inline links, and display a dropdown when open */
-.mobile-menu-toggle { display: none; }
+/* Coordinate hamburger vs inline nav - REPLACEMENT BLOCK */
 
+/* Desktop default: hide mobile toggle and show inline nav */
+@media (min-width: 801px) {
+  .topnav .container .mobile-menu-toggle {
+    display: none !important;
+    position: static !important;
+    transform: none !important;
+  }
+
+  .topnav .container .nav-links {
+    display: flex !important;
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    height: auto !important;
+    width: auto !important;
+    background: transparent !important;
+    padding: 0 !important;
+    gap: 24px;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+/* Mobile: show hamburger (left) and keep nav off-canvas until opened */
 @media (max-width: 800px) {
-  .mobile-menu-toggle { display: inline-block; }
-
-  .nav-inner { position: relative; }
-
-  .nav-links {
-    display: none; /* hidden by default on mobile */
-    position: absolute;
-    right: 12px;
-    top: 100%;
-    background: rgba(255,255,255,0.98);
-    color: var(--dark);
-    width: 220px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-    border-radius: 8px;
-    padding: 6px 0;
-    z-index: 1100;
+  .topnav .container .mobile-menu-toggle {
+    display: inline-block !important;
+    position: absolute !important;
+    left: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 2100 !important;
+    background: none !important;
+    border: 0 !important;
+    color: white !important;
+    font-size: 1.6rem !important;
+    padding: 8px !important;
   }
 
-  .nav-links li { display: block; }
-  .nav-links li a {
-    display: block;
-    padding: 10px 14px;
-    color: var(--dark);
-    text-decoration: none;
-    font-weight: 600;
+  /* Off-canvas drawer hidden by default (out of flow) */
+  .topnav .container .nav-links {
+    display: flex !important;
+    flex-direction: column !important;
+    position: fixed !important;
+    top: 0 !important;
+    height: 100vh !important;
+    width: 260px !important;
+    transform: translateX(110%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: transform 260ms ease, opacity 200ms ease !important;
+    background: rgba(0,0,0,0.88) !important; /* stronger dark backdrop for contrast */
+    box-shadow: 0 8px 30px rgba(0,0,0,0.45) !important;
+    padding: 64px 14px 20px 14px !important;
+    gap: 6px !important;
+    z-index: 2100 !important;
+    justify-content: flex-start !important;
+    border-radius: 10px !important;
   }
-  .nav-links li a:hover { background: rgba(0,0,0,0.04); }
 
-  /* When JS toggles the nav-open class on nav.topnav, show the menu */
-  .topnav.nav-open .nav-links { display: block; }
+  .topnav .container .nav-links li { display: block !important; }
+  .topnav .container .nav-links li a {
+    display: block !important;
+    padding: 12px 14px !important; /* reduced horizontal padding to half */
+    color: white !important;
+    text-decoration: none !important;
+    background: transparent !important;
+    border-radius: 6px !important;
+  }
 
-  /* Ensure anchored fragment targets don't get hidden under the fixed nav */
+  /* when toggled open, slide in and enable interactions */
+  .topnav.nav-open .nav-links {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  /* backdrop */
+  .topnav.nav-open::after {
+    content: '' !important;
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0,0,0,0.35) !important;
+    z-index: 1990 !important;
+  }
+
+  /* keep hero offset for anchor links */
   .hero-hero { scroll-margin-top: 90px; }
 }
 
-@media (min-width: 801px) {
-  .nav-links { display: flex !important; }
-}
-@media (max-width: 768px) {
-  .mobile-menu-toggle {
-    display: block;
-  }
-  .nav-links {
-    position: fixed;
-    top: 64px;
-    left: -110%;
-    flex-direction: column;
-    background: rgba(45, 55, 72, 0.98);
-    width: 100%;
-    padding: 20px;
-    gap: 18px;
-    transition: left 0.25s;
-  }
-  .nav-links.active {
-    left: 0;
-  }
-  header.hero-hero {
-    padding: 70px 0;
-  }
-  .portfolio-image {
-    height: 200px;
-  }
-}
+/* end replacement block */
 
 /* Lightbox helpers used by gallery pages */
 .lightbox {
@@ -501,14 +527,8 @@ footer {
   animation: lbZoom 0.32s ease forwards;
 }
 @keyframes lbZoom {
-  from {
-    transform: scale(0.92);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 .lightbox img {
   max-width: 92%;
@@ -539,231 +559,14 @@ footer {
   cursor: pointer;
 }
 
-/* PhotoSwipe caption and frame styling to match Blacklight lightbox */
-.pswp__caption {
-  display: flex;
-  justify-content: center;
-}
-.pswp__caption__center {
-  text-align: center;
-  max-width: 90%;
-  margin: 0 auto;
-  color: #222;
-  padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 6px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+/* PhotoSwipe/CSS removed — not used in r2. */
+
+/* Keep a single, clear rule for desktop nav layout */
+@media (min-width: 801px) {
+  .nav-links { display: flex; gap: 24px; }
 }
 
-.pswp__zoom-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.pswp__img {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-  border: 8px solid #fff;
-  border-radius: 6px;
-}
-.pswp--zoom-allowed .pswp__zoom-wrap {
-  transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
+/* Note: the mobile drawer styles are defined earlier in this file
+   (single @media (max-width:800px) block). Avoid duplicating rules
+   here to prevent cascade conflicts and !important usage. */
 
-/* visible dismiss/back button while PhotoSwipe open */
-.r2-pswp-close {
-  position: fixed;
-  top: 18px;
-  right: 18px;
-  z-index: 14000;
-  background: rgba(255, 255, 255, 0.96);
-  border: 0;
-  padding: 8px 12px;
-  border-radius: 6px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-  font-size: 20px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-/* Make Photoswipe close control visible and touch-friendly */
-.pswp__button--close,
-.pswp__ui__button--close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 44px;
-  height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.45) !important;
-  color: #fff !important;
-  border-radius: 8px;
-  z-index: 14050 !important;
-  opacity: 1 !important;
-}
-
-/* Improve caption contrast and readability on all viewports */
-.pswp__caption,
-.pswp__caption__center,
-.r2-pswp-caption {
-  background: rgba(0,0,0,0.6) !important;
-  color: #fff !important;
-}
-
-/* Reserve vertical space so tall images leave room for captions/controls */
-.pswp__scroll-wrap {
-  padding-bottom: 80px !important;
-}
-
-.pswp__img,
-.pswp__zoom-wrap img {
-  max-width: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  max-height: calc(100vh - 120px);
-}
-
-/* Fallback caption overlay used when PhotoSwipe events aren't available */
-.r2-pswp-caption {
-  position: fixed;
-  left: 50%;
-  bottom: 26px;
-  transform: translateX(-50%);
-  z-index: 13500;
-  background: rgba(255, 255, 255, 0.95);
-  color: #222;
-  padding: 10px 14px;
-  border-radius: 6px;
-  max-width: 92%;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-  text-align: center;
-  font-size: 0.95rem;
-}
-
-/* Emergency PhotoSwipe overrides to ensure UI/captions are visible */
-.pswp, .pswp__ui {
-  z-index: 14000 !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-.pswp__caption, .pswp__caption__center, .r2-pswp-caption {
-  background: rgba(0,0,0,0.65) !important;
-  color: #fff !important;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35) !important;
-}
-.pswp__button--close, .pswp__ui__button--close, .r2-pswp-close {
-  display: inline-flex !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  background: rgba(0,0,0,0.55) !important;
-  color: #fff !important;
-  border-radius: 8px !important;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35) !important;
-}
-
-/* If other rules hide caption by positioning off-screen, force it into view */
-.pswp__caption { position: absolute !important; left: 0; right: 0; bottom: 12px !important; }
-
-/* Stronger overrides: ensure captions and close control render above the image frame */
-.pswp__ui { z-index: 16000 !important; }
-.pswp__caption, .pswp__caption__center, .r2-pswp-caption { z-index: 16100 !important; }
-.pswp__button--close, .pswp__ui__button--close, .r2-pswp-close { z-index: 16200 !important; }
-
-/* Ensure caption text is fully opaque white and large enough to read */
-.pswp__caption__center, .r2-pswp-caption { color: #ffffff !important; opacity: 1 !important; }
-.pswp__caption__center { font-size: 1rem !important; }
-
-/* Ensure the close button icon is visible (SVG or pseudo-elements) */
-.pswp__button--close svg, .pswp__ui__button--close svg {
-  fill: #fff !important;
-  stroke: #fff !important;
-}
-
-/* If the image wrapper uses higher stacking, keep it lower than UI */
-.pswp__img, .pswp__zoom-wrap { z-index: 15000 !important; }
-
-/* If caption is clipped by overflow, remove overflow on container */
-.pswp__ui, .pswp__scroll-wrap { overflow: visible !important; }
-
-/* Emergency: ensure PhotoSwipe overlay captures clicks and renders its background and UI above the page */
-.pswp {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  z-index: 20000 !important;
-  pointer-events: auto !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-.pswp * {
-  pointer-events: auto !important;
-}
-.pswp__bg {
-  background: rgba(0,0,0,0.86) !important;
-  opacity: 1 !important;
-  z-index: 20010 !important;
-}
-.pswp__ui {
-  z-index: 20020 !important;
-  pointer-events: auto !important;
-}
-.pswp__caption, .pswp__caption__center, .r2-pswp-caption {
-  position: absolute !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 14px !important;
-  margin: 0 auto !important;
-  max-width: 96% !important;
-  background: rgba(0,0,0,0.72) !important;
-  color: #fff !important;
-  padding: 10px 14px !important;
-  border-radius: 8px !important;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.45) !important;
-  text-align: center !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-.pswp__button--close, .pswp__ui__button--close, .r2-pswp-close {
-  position: absolute !important;
-  top: 12px !important;
-  right: 12px !important;
-  width: 44px !important;
-  height: 44px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background: rgba(0,0,0,0.6) !important;
-  color: #fff !important;
-  border-radius: 8px !important;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35) !important;
-  z-index: 20030 !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-.pswp__button--close svg, .pswp__ui__button--close svg { fill: #fff !important; stroke: #fff !important; }
-
-/* keep images underneath UI so captions and controls remain tappable */
-.pswp__img, .pswp__zoom-wrap { z-index: 19900 !important; }
-
-/* Strong final override: ensure native PhotoSwipe captions render solid and in the foreground */
-.pswp__caption, .pswp__caption__center {
-  background: rgba(0,0,0,0.86) !important;
-  color: #fff !important;
-  padding: 10px 14px !important;
-  border-radius: 8px !important;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.45) !important;
-  position: absolute !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 14px !important;
-  margin: 0 auto !important;
-  text-align: center !important;
-  z-index: 30000 !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-/* Using PhotoSwipe native captions */
