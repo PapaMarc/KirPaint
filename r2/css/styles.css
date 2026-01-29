@@ -31,7 +31,8 @@ nav.topnav {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(45, 55, 72, 0.95);
+  /* background: rgba(45, 55, 72, 0.95); */
+  background: rgba(0, 40, 85, 0.98);
   backdrop-filter: blur(6px);
   padding: 12px 0;
   z-index: 1000;
