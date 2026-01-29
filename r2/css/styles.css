@@ -312,8 +312,8 @@ h2 {
   justify-content: flex-start;
 }
 .team-member.small .team-avatar {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
   margin-bottom: 14px;
 }
 
@@ -325,9 +325,10 @@ h2 {
     width: 100%;
     max-width: 100%;
   }
-  .team-member.feature .team-avatar {
-    width: 84px;
-    height: 84px;
+  /* Keep avatars consistent and large on narrow viewports as well */
+  .team-avatar {
+    width: 140px;
+    height: 140px;
     margin: 12px auto;
   }
 }
