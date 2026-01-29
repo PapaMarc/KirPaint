@@ -328,7 +328,7 @@ h2 {
   .team-member.feature .team-avatar {
     width: 84px;
     height: 84px;
-    margin: 12px 0;
+    margin: 12px auto;
   }
 }
 
@@ -365,7 +365,7 @@ h2 {
   }
 
   .team-member.feature .team-avatar {
-    margin-top: 8px;
+    margin: 8px auto;
   }
 }
 
