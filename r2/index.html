@@ -6,6 +6,45 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>KirPaint — Modernized (r2)</title>
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- added: small accordion styles -->
+    <style>
+        .bio-accordion {
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        .bio-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            margin-left: 0.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            background: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .bio-details {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height .25s ease;
+        }
+
+        .bio-details.show {
+            max-height: 1200px;
+        }
+
+        /* large enough to expand content */
+        .bio-accordion p {
+            margin: 0;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -204,32 +243,34 @@
                         experience designing and delivering innovative solutions for several of that industry's
                         legends.</p>
                     <br>
+                    <!-- replaced paragraph with accessible accordion -->
+                    <div class="bio-accordion" aria-labelledby="marc-bio-summary">
+                        <p id="marc-bio-summary">
+                            <span class="bio-summary">Marc Seinfeld is a creative technologist, and security innovator
+                                with a career spanning more than two decades at Microsoft.</span>
+                            <button class="bio-toggle" aria-expanded="false" aria-controls="marc-bio-details"
+                                aria-label="Expand biography">+</button>
+                        </p>
+
+                        <div id="marc-bio-details" class="bio-details" hidden>
+                            <p>He played a pivotal role leading teams and driving their formative work in global
+                                corporate email systems, mobile connectivity and core antivirus protection technology,
+                                resulting in <a
+                                    href="https://patentscope.wipo.int/search/en/result.jsf?_qid=7f648cb5-c1a2-44c8-ab56-98adbbed6d97">ample
+                                    global Patent filings</a>. These in turn have been <a
+                                    href="https://scholar.google.com/citations?hl=en&user=-8J17sAAAAAJ">cited thousands
+                                    of times</a> in subsequent domain related filings (additional <a
+                                    href="https://typeset.io/authors/marc-e-seinfeld-2azhxt5bbj">SCISPACE citations
+                                    reference</a>). The core AV team he founded, along with the security technology they
+                                pursued, continues to provide a foundational role securing hundreds of millions of <a
+                                    href="https://www.windowscentral.com/more-14-billion-devices-now-run-windows-11-or-10">(recent
+                                    tallies acrrue ~1.4B)</a> Windows workstations. Further, backend integration extends
+                                the protective impact to countless additional users across Microsoft's major global
+                                cloud services, including Outlook.com, OneDrive, and Azure.</p>
+                        </div>
+                    </div>
+                    <br>
                     <p>
-
-                        Marc Seinfeld is a security innovator, and creative technologist with a career spanning more
-                        than two decades at Microsoft. He played a pivotal role leading teams and driving their
-                        formative work
-                        in global corporate email systems, mobile connectivity and core antivirus protection technology,
-                        resulting in <a
-                            href="https://patentscope.wipo.int/search/en/result.jsf?_qid=7f648cb5-c1a2-44c8-ab56-98adbbed6d97">ample
-                            global Patent filings</a>.
-                        These in turn have been
-                        <a href="https://scholar.google.com/citations?hl=en&user=-8J17sAAAAAJ">cited thousands of
-                            times</a> in
-                        subsequent
-                        domain related filings (additional <a
-                            href="https://typeset.io/authors/marc-e-seinfeld-2azhxt5bbj">SCISPACE
-                            citations reference</a>). The core AV team he founded, along with the security
-                        technology they pursued, continues to provide a foundational role securing hundreds of
-                        millions of <a
-                            href="https://www.windowscentral.com/more-14-billion-devices-now-run-windows-11-or-10">(recent
-                            tallies acrrue ~1.4B)</a> Windows workstations. Further, backend integration extends the
-                        protective impact
-                        to countless
-                        additional users across Microsoft's major global cloud services, including Outlook.com,
-                        OneDrive, and Azure.
-                        <br></br>
-
                         He holds a B.A. in Economics from Duke University, where he
                         also rowed bow seat for their <a href="/marc/DukeCrew.htm">lightweight
                             8 crew</a>. He's an avid diver having logged over 300 dives, or more than 9
@@ -267,49 +308,92 @@
     </footer>
 
     <script src="js/main.js"></script>
+
+    <!-- accordion behavior -->
+    <script>
+        (function () {
+            function togglePanel(btn) {
+                const id = btn.getAttribute('aria-controls');
+                const panel = document.getElementById(id);
+                if (!panel) return;
+
+                const expanded = btn.getAttribute('aria-expanded') === 'true';
+                if (expanded) {
+                    btn.setAttribute('aria-expanded', 'false');
+                    btn.textContent = '+';
+                    panel.style.maxHeight = panel.scrollHeight + 'px';
+                    requestAnimationFrame(() => { panel.style.maxHeight = '0'; });
+                    function onEnd() {
+                        panel.setAttribute('hidden', '');
+                        panel.classList.remove('show');
+                        panel.removeEventListener('transitionend', onEnd);
+                    }
+                    panel.addEventListener('transitionend', onEnd);
+                } else {
+                    btn.setAttribute('aria-expanded', 'true');
+                    btn.textContent = '−';
+                    panel.classList.add('show');
+                    panel.removeAttribute('hidden');
+                    panel.style.maxHeight = panel.scrollHeight + 'px';
+                }
+            }
+
+            document.addEventListener('click', function (e) {
+                const btn = e.target.closest('.bio-toggle');
+                if (!btn) return;
+                togglePanel(btn);
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    const btn = document.activeElement;
+                    if (btn && btn.classList && btn.classList.contains('bio-toggle')) {
+                        e.preventDefault();
+                        togglePanel(btn);
+                    }
+                }
+            });
+        })();
+    </script>
+
+    <script>
+        // Ensure contact background is applied (fallback for cascade issues)
+        (function () {
+            const contact = document.getElementById('contact');
+            if (!contact) return;
+            const computed = window.getComputedStyle(contact).backgroundImage;
+            if (!computed || computed === 'none') {
+                contact.style.background = "url('/images/BlacklightPainting/crop/TDSMermaiddetail_Crop.jpg') center/cover no-repeat fixed";
+            }
+        })();
+    </script>
+
+    <script>
+        // Lightweight case-insensitive fragment handler so both #Marc and #marc work
+        (function () {
+            function handleFragment(hash) {
+                if (!hash) return;
+                const raw = hash.replace(/^#/, '');
+                if (!raw) return;
+
+                let target = document.getElementById(raw);
+                if (target) {
+                    try { history.replaceState(null, '', '#' + target.id); } catch (e) { }
+                    return;
+                }
+
+                target = Array.from(document.querySelectorAll('[id]')).find(e => e.id.toLowerCase() === raw.toLowerCase());
+                if (target) {
+                    target.scrollIntoView({ behavior: 'auto', block: 'start' });
+                    try { history.replaceState(null, '', '#' + target.id); } catch (e) { }
+                }
+            }
+
+            window.addEventListener('hashchange', () => handleFragment(location.hash));
+            document.addEventListener('DOMContentLoaded', () => handleFragment(location.hash));
+        })();
+    </script>
+
 </body>
-<script>
-    // Ensure contact background is applied (fallback for cascade issues)
-    (function () {
-        const contact = document.getElementById('contact');
-        if (!contact) return;
-        const computed = window.getComputedStyle(contact).backgroundImage;
-        if (!computed || computed === 'none') {
-            contact.style.background = "url('/images/BlacklightPainting/crop/TDSMermaiddetail_Crop.jpg') center/cover no-repeat fixed";
-        }
-    })();
-</script>
-
-<script>
-    // Lightweight case-insensitive fragment handler so both #Marc and #marc work
-    (function () {
-        // Use CSS `scroll-margin-top` on .team-member for header offset.
-        // This function finds a target case-insensitively, scrolls to it using
-        // `scrollIntoView` (which respects scroll-margin-top in modern browsers),
-        // and then normalizes the URL to the canonical element id.
-        function handleFragment(hash) {
-            if (!hash) return;
-            const raw = hash.replace(/^#/, '');
-            if (!raw) return;
-
-            // If exact id exists, normalize URL to that id (ensures canonical case)
-            let target = document.getElementById(raw);
-            if (target) {
-                try { history.replaceState(null, '', '#' + target.id); } catch (e) { }
-                return;
-            }
-
-            // Find case-insensitive match
-            target = Array.from(document.querySelectorAll('[id]')).find(e => e.id.toLowerCase() === raw.toLowerCase());
-            if (target) {
-                target.scrollIntoView({ behavior: 'auto', block: 'start' });
-                try { history.replaceState(null, '', '#' + target.id); } catch (e) { }
-            }
-        }
-
-        window.addEventListener('hashchange', () => handleFragment(location.hash));
-        document.addEventListener('DOMContentLoaded', () => handleFragment(location.hash));
-    })();
-</script>
 
 </html>
