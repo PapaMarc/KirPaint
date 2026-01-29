@@ -11,6 +11,24 @@
   --bg: #f8f9fa;
   --muted: #666;
   --dark: #222;
+  --link: #66aaff; /* global link color (was footer) */
+  --link-visited: #aa8cff;
+  --link-hover: #c7ddff;
+}
+
+/* Global link styles (applies site-wide; component rules may override) */
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+a:visited {
+  color: var(--link-visited);
+}
+a:hover,
+a:focus {
+  color: var(--link-hover);
+  text-decoration: underline;
+  outline: none;
 }
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -416,31 +434,6 @@ section#contact.contact-section {
 .contact-info {
   font-size: 1.15rem;
   margin-top: 18px;
-}
-
-footer {
-  background: rgba(0, 40, 85, 0.98);
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.7rem;
-  text-align: left;
-  padding: 26px 0;
-}
-/* Unvisited links */
-footer a {
-  color: #66aaff; /* accessible light blue */
-  text-decoration: none; /* optional */
-}
-
-/* Visited links */
-footer a:visited {
-  color: #aa8cff; /* accessible visited purple-blue */
-}
-
-/* Optional hover/focus for clarity */
-footer a:hover,
-footer a:focus {
-  color: #c7ddff; /* slightly brighter for interaction */
-  text-decoration: underline;
 }
 
 /* Responsive */
