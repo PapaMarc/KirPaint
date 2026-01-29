@@ -2,96 +2,12 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Industrial & Automotive — KirPaint (r2)</title>
-  <link rel="stylesheet" href="../glightbox/glightbox.min.css">
-  <link rel="stylesheet" href="../glightbox/glightbox.custom.css">
-  <link rel="stylesheet" href="../css/styles.css">
-</head>
-
-<body>
-  <nav class="topnav">
-    <div class="container nav-inner">
-      <a class="logo" href="/r2/">KirPaint</a>
-      <a class="logo" href="/r2/index.html">← Back</a>
-    </div>
-  </nav>
-
-  <header class="hero-hero" style="background-image:url('/images/CatalyzedIndustrialAutomotive/crop/Feature_CruiseLineDory_Crop.jpg')">
-    <div class="container">
-      <h1>Industrial & Catalyzed Automotive Finishes</h1>
-      <p class="lead">High-performance finishes and durable coatings for extreme environments.</p>
-    </div>
-  </header>
-
-  <main>
-    <section>
-      <div class="container">
-        <h2>Images</h2>
-        <div id="industrial-gallery" class="gallery-grid"></div>
-        <div id="gallery-caption" aria-hidden="false" style="margin-top:12px; display:none;"></div>
-      </div>
-    </section>
-  </main>
-
-  <script src="../glightbox/glightbox.min.js"></script>
-  <script>
-    (function () {
-      var galleryEl = document.getElementById('industrial-gallery');
-      var captionEl = document.getElementById('gallery-caption');
-      if (!galleryEl) return;
-
-      fetch('../data/industrial.json').then(function (r) { return r.json(); }).then(function (list) {
-        var items = Array.isArray(list) ? list : [];
-        items.forEach(function (it) {
-          var a = document.createElement('a');
-          a.href = it.full || it.src || '#';
-          a.className = 'glightbox';
-          a.setAttribute('data-title', it.caption || '');
-          var img = document.createElement('img');
-          img.src = it.thumb || it.full || '#';
-          img.alt = it.alt || '';
-          img.style.width = '220px'; img.style.height = '160px'; img.style.objectFit = 'cover'; img.style.border = '1px solid #ccc'; img.style.margin = '6px';
-          a.appendChild(img);
-          galleryEl.appendChild(a);
-        });
-
-        try {
-          window.__g = GLightbox({ selector: '.glightbox', touchNavigation: true, loop: true });
-
-          function updateCaption() {
-            try {
-              var idx = window.__g && window.__g.index != null ? window.__g.index : 0;
-              var anchors = Array.from(document.querySelectorAll('a.glightbox'));
-              var title = (anchors[idx] && anchors[idx].getAttribute('data-title')) || '';
-              if (captionEl) { captionEl.textContent = title; captionEl.style.display = title ? 'block' : 'none'; }
-            } catch (e) { }
-          }
-
-          if (window.__g && typeof window.__g.on === 'function') {
-            window.__g.on('open', function () { try { (document.querySelector('.glightbox-container') || document.body).appendChild(captionEl); } catch (e) { } updateCaption(); });
-            window.__g.on('slide_changed', function () { setTimeout(updateCaption, 40); });
-            window.__g.on('close', function () { try { document.querySelector('.container').appendChild(captionEl); } catch (e) { } captionEl.textContent = ''; captionEl.style.display = 'none'; });
-          }
-        } catch (e) { console.error('GLightbox init failed', e); }
-      }).catch(function (err) { console.error('failed to load industrial.json', err); });
-    })();
-  </script>
-
-  <script src="../glightbox/glightbox-init.js"></script>
-</body>
-
-</html>
-<!doctype html>
-<html lang="en">
-
-<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Industrial & Automotive — KirPaint (r2)</title>
-    <link rel="stylesheet" href="/photoswipe/photoswipe.css">
-    <link rel="stylesheet" href="/r2/css/styles.css">
+    <link rel="stylesheet" href="../glightbox/glightbox.min.css">
+    <link rel="stylesheet" href="../glightbox/glightbox.custom.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body>
@@ -115,14 +31,56 @@
             <div class="container">
                 <h2>Images</h2>
                 <div id="industrial-gallery" class="gallery-grid"></div>
+                <div id="gallery-caption" aria-hidden="false" style="margin-top:12px; display:none;"></div>
             </div>
         </section>
     </main>
 
-    <!-- PhotoSwipe scripts (scoped to this page) -->
-    <script src="/photoswipe/photoswipe.umd.min.js"></script>
-    <script src="/photoswipe/photoswipe-lightbox.umd.min.js"></script>
-    <script src="/js/photoswipe-init.js"></script>
+    <script src="../glightbox/glightbox.min.js"></script>
+    <script>
+        (function () {
+            var galleryEl = document.getElementById('industrial-gallery');
+            var captionEl = document.getElementById('gallery-caption');
+            if (!galleryEl) return;
+
+            fetch('../data/industrial.json').then(function (r) { return r.json(); }).then(function (list) {
+                var items = Array.isArray(list) ? list : [];
+                items.forEach(function (it) {
+                    var a = document.createElement('a');
+                    a.href = it.full || it.src || '#';
+                    a.className = 'glightbox';
+                    a.setAttribute('data-title', it.caption || '');
+                    var img = document.createElement('img');
+                    img.src = it.thumb || it.full || '#';
+                    img.alt = it.alt || '';
+                    img.style.width = '220px'; img.style.height = '160px'; img.style.objectFit = 'cover'; img.style.border = '1px solid #ccc'; img.style.margin = '6px';
+                    a.appendChild(img);
+                    galleryEl.appendChild(a);
+                });
+
+                try {
+                    window.__g = GLightbox({ selector: '.glightbox', touchNavigation: true, loop: true });
+
+                    function updateCaption() {
+                        try {
+                            var idx = window.__g && window.__g.index != null ? window.__g.index : 0;
+                            var anchors = Array.from(document.querySelectorAll('a.glightbox'));
+                            var title = (anchors[idx] && anchors[idx].getAttribute('data-title')) || '';
+                            if (captionEl) { captionEl.textContent = title; captionEl.style.display = title ? 'block' : 'none'; }
+                        } catch (e) { }
+                    }
+
+                    if (window.__g && typeof window.__g.on === 'function') {
+                        window.__g.on('open', function () { try { (document.querySelector('.glightbox-container') || document.body).appendChild(captionEl); } catch (e) { } updateCaption(); });
+                        window.__g.on('slide_changed', function () { setTimeout(updateCaption, 40); });
+                        window.__g.on('close', function () { try { document.querySelector('.container').appendChild(captionEl); } catch (e) { } captionEl.textContent = ''; captionEl.style.display = 'none'; });
+                    }
+                } catch (e) { console.error('GLightbox init failed', e); }
+            }).catch(function (err) { console.error('failed to load industrial.json', err); });
+        })();
+    </script>
+
+    <script src="../glightbox/glightbox-init.js"></script>
 </body>
 
 </html>
