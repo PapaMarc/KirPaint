@@ -1,3 +1,41 @@
+// Small mobile nav toggle script for r2
+(function () {
+  const nav = document.querySelector('.topnav');
+  const toggle = document.querySelector('.mobile-menu-toggle');
+  const links = document.getElementById('nav-links');
+  if (!nav || !toggle || !links) return;
+
+  const breakpoint = 800; // keep in sync with CSS
+
+  function setExpanded(open) {
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) nav.classList.add('nav-open'); else nav.classList.remove('nav-open');
+  }
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const opened = toggle.getAttribute('aria-expanded') === 'true';
+    setExpanded(!opened);
+  });
+
+  // Close when a nav link is clicked (mobile)
+  links.addEventListener('click', (e) => {
+    if (e.target.tagName.toLowerCase() === 'a' && window.innerWidth <= breakpoint) {
+      setExpanded(false);
+    }
+  });
+
+  // Close on outside click (mobile)
+  document.addEventListener('click', (e) => {
+    if (window.innerWidth > breakpoint) return;
+    if (!nav.contains(e.target)) setExpanded(false);
+  });
+
+  // Reset state on resize to large view
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > breakpoint) setExpanded(false);
+  });
+})();
 // Interactive helpers for r2 index: year, mobile menu, smooth scroll
 document.addEventListener("DOMContentLoaded", function () {
   // set year if present
