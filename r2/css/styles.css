@@ -369,6 +369,19 @@ h2 {
   }
 }
 
+/* Make the two small team squares stack on narrow viewports similar to the
+   services grid. Also relax min-height so they size naturally on mobile. */
+@media (max-width: 767px) {
+  .team-row-squares {
+    grid-template-columns: 1fr; /* stack vertically */
+    gap: 18px;
+  }
+  .team-member.small {
+    min-height: auto;
+    padding: 18px;
+  }
+}
+
 .contact-section {
   text-align: center;
   color: white;
