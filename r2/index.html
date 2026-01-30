@@ -167,7 +167,9 @@
                             alt="Feature DLAnaheim Honey">
                     </div>
                     <div class="feature-content">
-                        <div class="team-avatar"><img src="/images/TheCrew/crop/Feature_HKCrew_IMG0630_Crop.jpg"
+                            <div class="team-avatar"><img id="kirsten-avatar"
+                                src="/images/TheCrew/crop/Feature_HKCrew_IMG0630_Crop.jpg"
+                                data-srcs='["/images/TheCrew/crop/Feature_HKCrew_IMG0630_Crop.jpg","/images/team/kirsten.jpg"]'
                                 alt="Kirsten Ruhs"></div>
                         <h3>Kirsten Ruhs</h3>
                         <p class="role">Owner & Sr. Project Development Director — Art Direction, Themed Finishes</p>
@@ -397,3 +399,18 @@
 </body>
 
 </html>
+
+<script>
+    (function () {
+        var img = document.getElementById('kirsten-avatar');
+        if (!img) return;
+        try {
+            var data = img.getAttribute('data-srcs');
+            var arr = data ? JSON.parse(data) : [];
+            if (arr && arr.length) {
+                var choice = arr[Math.floor(Math.random() * arr.length)];
+                img.src = choice;
+            }
+        } catch (e) { }
+    })();
+</script>
