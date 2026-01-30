@@ -7,9 +7,108 @@
     }
   } catch (e) {}
 
+  function parseYouTubeTimestamp(url) {
+    const match = url.match(/[?&]t=([\dhms]+)/i);
+    if (!match) return 0;
+
+    const t = match[1];
+
+    if (/^\d+$/.test(t)) return parseInt(t, 10);
+
+    let seconds = 0;
+    const h = t.match(/(\d+)h/i);
+    const m = t.match(/(\d+)m/i);
+    const s = t.match(/(\d+)s/i);
+
+    if (h) seconds += parseInt(h[1], 10) * 3600;
+    if (m) seconds += parseInt(m[1], 10) * 60;
+    if (s) seconds += parseInt(s[1], 10);
+
+    return seconds;
+  }
+
   function installSimpleSwipe(glight) {
     if (!glight || glight.__r2_installed) return;
     glight.__r2_installed = true;
+
+    try {
+      var lightbox = glight;
+      lightbox.on("slide_before_load", (slide) => {
+        if (!slide || !slide.slideConfig || !slide.slideConfig.href) return;
+
+        const url = slide.slideConfig.href;
+        const start = parseYouTubeTimestamp(url);
+
+        // DEBUG: log computed start and existing vars
+        try {
+          console.log(
+            "r2-debug: slide_before_load url=",
+            url,
+            "computed start=",
+            start,
+            "before playerVars=",
+            slide.playerVars,
+            "playerParams=",
+            slide.playerParams,
+          );
+        } catch (e) {}
+
+        if (start > 0) {
+          slide.playerVars = slide.playerVars || {};
+          slide.playerVars.start = start;
+          // request autoplay
+          slide.playerVars.autoplay = 1;
+          // Fallback: some GLightbox builds use playerParams instead of playerVars
+          slide.playerParams = slide.playerParams || {};
+          slide.playerParams.start = start;
+          slide.playerParams.autoplay = 1;
+          // store start seconds per youtube id for observer fallback
+          try {
+            window.__r2_youtube_start_map = window.__r2_youtube_start_map || {};
+            var vid_match = url
+              ? url.match(/[?&]v=([^&]+)/) ||
+                url.match(/youtu\.be\/([^?&]+)/) ||
+                url.match(/\/embed\/([^?&/]+)/)
+              : null;
+            var vid = vid_match ? vid_match[1] : null;
+            if (vid && start > 0) window.__r2_youtube_start_map[vid] = start;
+          } catch (e) {}
+        }
+      });
+
+      // Ensure iframe src includes a start= param after the slide iframe is created.
+      try {
+        lightbox.on("slide_after_load", (slide) => {
+          try {
+            if (!slide || !slide.slideConfig || !slide.slideConfig.href) return;
+            const url = slide.slideConfig.href;
+            const start = parseYouTubeTimestamp(url);
+            if (start <= 0) return;
+
+            setTimeout(() => {
+              var iframe = document.querySelector(
+                ".glightbox-container iframe, .glightbox-overlay iframe",
+              );
+              if (!iframe) return;
+              try {
+                var src = iframe.getAttribute("src") || "";
+                if (!/(?:\?|&)start=/.test(src)) {
+                  var sep = src.indexOf("?") === -1 ? "?" : "&";
+                  src = src + sep + "start=" + encodeURIComponent(start);
+                  // ensure autoplay and mute flags are present so browser will allow autoplay
+                  if (!/(?:\?|&)autoplay=1/.test(src)) src += "&autoplay=1";
+                  iframe.setAttribute("src", src);
+                  console.log(
+                    "r2-debug: patched iframe src with start=",
+                    start,
+                  );
+                }
+              } catch (e) {}
+            }, 60);
+          } catch (e) {}
+        });
+      } catch (e) {}
+    } catch (e) {}
 
     var detacher = null;
     function attachOnce() {
@@ -213,4 +312,101 @@
       clearInterval(to);
     }, 10000);
   }
+
+  // Install a MutationObserver fallback to patch YouTube iframes with start= and post a seek message.
+  (function installIframeObserver() {
+    try {
+      if (window.__r2_iframe_observer_installed) return;
+      window.__r2_iframe_observer_installed = true;
+
+      function extractYouTubeIdFromUrl(u) {
+        if (!u) return null;
+        var m =
+          u.match(/[?&]v=([^&]+)/) ||
+          u.match(/youtu\.be\/([^?&]+)/) ||
+          u.match(/\/embed\/([^?&/]+)/);
+        return m ? m[1] : null;
+      }
+
+      function tryPatchIframe(iframe) {
+        try {
+          if (!iframe || !iframe.getAttribute) return;
+          var src = iframe.getAttribute("src") || "";
+          if (!/(?:youtube\.com|youtube-nocookie\.com)/i.test(src)) return;
+
+          var vid = extractYouTubeIdFromUrl(src);
+          if (!vid) {
+            var m = src.match(/\/embed\/([^?&/]+)/);
+            vid = m ? m[1] : null;
+          }
+          if (!vid) return;
+          var start =
+            window.__r2_youtube_start_map && window.__r2_youtube_start_map[vid];
+          if (!start || start <= 0) return;
+
+          if (!/(?:\?|&)start=/.test(src)) {
+            var sep = src.indexOf("?") === -1 ? "?" : "&";
+            src = src + sep + "start=" + encodeURIComponent(start);
+            if (!/(?:\?|&)autoplay=1/.test(src)) src += "&autoplay=1";
+            iframe.setAttribute("src", src);
+            try {
+              console.log(
+                "r2-debug: observer patched iframe src with start=",
+                start,
+                "vid=",
+                vid,
+              );
+            } catch (e) {}
+          }
+
+          // Try posting a seek command to the iframe (best-effort)
+          try {
+            var msg = JSON.stringify({
+              event: "command",
+              func: "seekTo",
+              args: [start, true],
+            });
+            iframe.contentWindow && iframe.contentWindow.postMessage(msg, "*");
+          } catch (e) {}
+        } catch (e) {}
+      }
+
+      var obs = new MutationObserver(function (records) {
+        try {
+          records.forEach(function (rec) {
+            try {
+              if (rec.type === "childList") {
+                rec.addedNodes &&
+                  rec.addedNodes.forEach(function (n) {
+                    if (n && n.nodeType === 1) {
+                      if (n.tagName === "IFRAME") tryPatchIframe(n);
+                      var ifr = n.querySelector && n.querySelector("iframe");
+                      if (ifr) tryPatchIframe(ifr);
+                    }
+                  });
+              } else if (
+                rec.type === "attributes" &&
+                rec.target &&
+                rec.target.tagName === "IFRAME" &&
+                rec.attributeName === "src"
+              ) {
+                tryPatchIframe(rec.target);
+              }
+            } catch (e) {}
+          });
+        } catch (e) {}
+      });
+
+      obs.observe(document.documentElement || document.body, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["src"],
+      });
+      Array.prototype.forEach.call(
+        document.querySelectorAll("iframe"),
+        tryPatchIframe,
+      );
+    } catch (e) {}
+  })();
 })();
