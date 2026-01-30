@@ -435,7 +435,13 @@ section#contact.contact-section {
   font-size: 1.15rem;
   margin-top: 18px;
 }
-
+footer {
+  background: rgba(0, 40, 85, 0.98);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.7rem;
+  text-align: left;
+  padding: 26px 0;
+}
 /* Responsive */
 
 /* Coordinate hamburger vs inline nav - REPLACEMENT BLOCK */
