@@ -1,8 +1,42 @@
+/*
+How to enable debug logs:
+
+Set the flag before loading the script (preferred in development). Example in your page HTML before the glightbox-init.js script tag:
+
+<script>window.__r2_dev = true;</script> <script src="/r2/glightbox/glightbox-init.js"></script>
+Or enable at runtime in DevTools (F12 in the browser rendering a given page):
+window.__r2_dev = true
+*/
+
 // Simple GLightbox swipe initializer
 (function () {
+  // dev flag for r2 debugging (default false). Set `window.__r2_dev = true` before
+  // loading this script to enable debug logs.
+  try {
+    if (
+      typeof window !== "undefined" &&
+      typeof window.__r2_dev === "undefined"
+    ) {
+      window.__r2_dev = false;
+    }
+  } catch (e) {}
+
+  function r2Debug() {
+    try {
+      if (
+        typeof window !== "undefined" &&
+        window.__r2_dev &&
+        console &&
+        console.log
+      ) {
+        console.log.apply(console, arguments);
+      }
+    } catch (e) {}
+  }
+
   try {
     if (typeof window !== "undefined") {
-      console.log("r2: glightbox-init.js loaded (simple)");
+      r2Debug("r2: glightbox-init.js loaded (simple)");
       window.__r2_glightbox_init_loaded = true;
     }
   } catch (e) {}
@@ -41,7 +75,7 @@
 
         // DEBUG: log computed start and existing vars
         try {
-          console.log(
+          r2Debug(
             "r2-debug: slide_before_load url=",
             url,
             "computed start=",
@@ -98,10 +132,7 @@
                   // ensure autoplay and mute flags are present so browser will allow autoplay
                   if (!/(?:\?|&)autoplay=1/.test(src)) src += "&autoplay=1";
                   iframe.setAttribute("src", src);
-                  console.log(
-                    "r2-debug: patched iframe src with start=",
-                    start,
-                  );
+                  r2Debug("r2-debug: patched iframe src with start=", start);
                 }
               } catch (e) {}
             }, 60);
@@ -350,7 +381,7 @@
             if (!/(?:\?|&)autoplay=1/.test(src)) src += "&autoplay=1";
             iframe.setAttribute("src", src);
             try {
-              console.log(
+              r2Debug(
                 "r2-debug: observer patched iframe src with start=",
                 start,
                 "vid=",
