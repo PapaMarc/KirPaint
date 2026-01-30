@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>As Seen on TV — KirPaint (r2)</title>
+    <link rel="stylesheet" href="../glightbox/glightbox.min.css">
+    <link rel="stylesheet" href="../glightbox/glightbox.custom.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="topnav">
+        <div class="container nav-inner">
+            <a class="logo" href="/r2/">KirPaint</a>
+            <a class="logo" href="/r2/index.html">← Back</a>
+        </div>
+    </nav>
+
+    <header class="hero-hero">
+        <div class="container">
+            <h1>As Seen on TV</h1>
+            <p class="lead">Industry media appearances by Kirsten recognizing her, her team and their work.</p>
+        </div>
+    </header>
+
+    <main>
+        <section>
+            <div class="container">
+                <h2>Videos</h2>
+                <div id="media-gallery" class="gallery-grid"></div>
+                <div id="gallery-caption" aria-hidden="false" style="margin-top:12px; display:none;"></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../glightbox/glightbox.min.js"></script>
+    <script>
+        (function () {
+            var galleryEl = document.getElementById('media-gallery');
+            var captionEl = document.getElementById('gallery-caption');
+            if (!galleryEl) return;
+
+            fetch('../data/media.json').then(function (r) { return r.json(); }).then(function (list) {
+                var items = Array.isArray(list) ? list : [];
+                items.forEach(function (it) {
+                    var a = document.createElement('a');
+                    a.href = it.full || it.src || '#';
+                    a.className = 'glightbox';
+                    a.setAttribute('data-title', it.caption || '');
+                    a.setAttribute('data-type', 'video');
+                    a.setAttribute('data-source', 'youtube');
+                    var img = document.createElement('img');
+                    img.src = it.thumb || it.full || '#';
+                    img.alt = it.alt || '';
+                    img.style.width = '220px'; img.style.height = '160px'; img.style.objectFit = 'cover'; img.style.border = '1px solid #ccc'; img.style.margin = '6px';
+                    a.appendChild(img);
+                    galleryEl.appendChild(a);
+                });
+
+                try {
+                    window.__g = GLightbox({ selector: '.glightbox', touchNavigation: true, loop: true });
+
+                    function updateCaption() {
+                        try {
+                            var idx = window.__g && window.__g.index != null ? window.__g.index : 0;
+                            var anchors = Array.from(document.querySelectorAll('a.glightbox'));
+                            var title = (anchors[idx] && anchors[idx].getAttribute('data-title')) || '';
+                            if (captionEl) { captionEl.textContent = title; captionEl.style.display = title ? 'block' : 'none'; }
+                        } catch (e) { }
+                    }
+
+                    if (window.__g && typeof window.__g.on === 'function') {
+                        window.__g.on('open', function () { try { (document.querySelector('.glightbox-container') || document.body).appendChild(captionEl); } catch (e) { } updateCaption(); });
+                        window.__g.on('slide_changed', function () { setTimeout(updateCaption, 40); });
+                        window.__g.on('close', function () { try { document.querySelector('.container').appendChild(captionEl); } catch (e) { } captionEl.textContent = ''; captionEl.style.display = 'none'; });
+                    }
+                } catch (e) { console.error('GLightbox init failed', e); }
+            }).catch(function (err) { console.error('failed to load media.json', err); });
+        })();
+    </script>
+
+    <script src="../glightbox/glightbox-init.js"></script>
+</body>
+
+</html>
