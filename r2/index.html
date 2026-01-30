@@ -227,8 +227,8 @@
                 </div>
 
                 <div id="marc" class="team-member">
-                    <div class="team-avatar"><img src="https://merware.net/merware/resources/mes.jpg"
-                            alt="Marc Seinfeld"></div>
+                    <div class="team-avatar"><img src="/images/team/mes.jpg"
+                            data-srcs='["/images/team/mes.jpg","/images/team/marc.jpg"]' alt="Marc Seinfeld"></div>
                     <h3>Marc Seinfeld</h3>
                     <p class="role">Director of Business Operations & Shop Foreman</p>
 
@@ -396,21 +396,23 @@
         })();
     </script>
 
+    <script>
+        (function () {
+            var imgs = document.querySelectorAll('.team-avatar img[data-srcs]');
+            if (!imgs || !imgs.length) return;
+            imgs.forEach(function (img) {
+                try {
+                    var data = img.getAttribute('data-srcs');
+                    var arr = data ? JSON.parse(data) : [];
+                    if (Array.isArray(arr) && arr.length) {
+                        var choice = arr[Math.floor(Math.random() * arr.length)];
+                        if (choice) img.src = choice;
+                    }
+                } catch (e) { /* ignore parse errors */ }
+            });
+        })();
+    </script>
+
 </body>
 
 </html>
-
-<script>
-    (function () {
-        var img = document.getElementById('kirsten-avatar');
-        if (!img) return;
-        try {
-            var data = img.getAttribute('data-srcs');
-            var arr = data ? JSON.parse(data) : [];
-            if (arr && arr.length) {
-                var choice = arr[Math.floor(Math.random() * arr.length)];
-                img.src = choice;
-            }
-        } catch (e) { }
-    })();
-</script>
