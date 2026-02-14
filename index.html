@@ -1,176 +1,428 @@
-﻿<!DOCTYPE html
-  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
-  xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<!doctype html>
+<html lang="en">
 
 <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>KirPaint — Modernized (r2)</title>
+    <link rel="stylesheet" href="css/styles.css">
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KLLQ3EEE3R"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+    <!-- added: small accordion styles -->
+    <style>
+        .bio-accordion {
+            display: block;
+            margin-top: 0.5rem;
+        }
 
-    gtag('config', 'G-KLLQ3EEE3R');
-  </script>
+        .bio-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            margin-left: 0.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            background: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+            line-height: 1;
+        }
 
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        .bio-details {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height .25s ease;
+        }
 
-  <noscript>
-    <meta name=description
-      content="KirPaint Inc. Founder, Owner and artist Kirsten Ruhs has extensive (approaching 30 yrs) Theme Finishes Industry experience at in-house Walt Disney Imagineering (WDI) and Universal Creative on all their parks worldwide." />
-    <meta name=keywords
-      content="KirPaint, KirPaint Inc., Art, Artist Designs, Blacklight, Painting, Catalyzed Industrial Automotive, Faux, Specialty, Figure Finishing, Explore Creativity, mock ups, samples, figures, Models, Colorboards, Murals, Rockwork, Showset, Prop, trompe l'oeil, Kirsten Ruhs, Kirsten Seinfeld, color selection, color mixing, creative art direction, production design, vendor management, project management, Theme Paint, Walt Disney Imagineering, WDI" />
-  </noscript>
+        .bio-details.show {
+            max-height: 1200px;
+        }
 
-
-  <title>Home of KirPaint Inc. and the KirPaint Galleries</title>
-
-
-  <link rel="stylesheet" href="css/lightbox.css" type="text/css" />
-  <link href="css/styles.css" rel="stylesheet" type="text/css" />
-
-  <script src="JS/prototype.js" type="text/javascript"></script>
-  <script src="js/scriptaculous.js?load=effects,builder" type="text/javascript"></script>
-  <script src="js/lightbox.js" type="text/javascript"></script>
-
-
-  <!-- BingAnalytics -->
-  <meta name="msvalidate.01" content="F2935C0FCAC662C35F3F8A4DED962FAF" />
-  <!-- BingAnalytics -->
-
-
+        /* large enough to expand content */
+        .bio-accordion p {
+            margin: 0;
+        }
+    </style>
 
 </head>
 
+<body>
+    <!-- Navigation Bar -->
+    <nav class="topnav">
+        <div class="container nav-inner">
+            <a class="logo" href="#page-top">KirPaint, Inc.</a>
+            <ul id="nav-links" class="nav-links">
+                <li><a href="#galleries">Galleries</a></li>
+                <li><a href="#certs">Certifications</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-controls="nav-links"
+                aria-expanded="false">☰</button>
+        </div>
+    </nav>
+
+    <!-- Header / Hero Section -->
+    <header id="page-top" class="hero-hero" style="background-image:url('/images/images/header.jpg')">
+        <div class="container">
+            <h1>KirPaint — Art Direction & Scenic Finishes</h1>
+            <p class="lead">Immersive murals, specialty finishes, props, and themed-environment expertise.</p>
+            <a href="#galleries" class="cta-button">Explore Galleries</a>
+        </div>
+    </header>
+
+    <!-- Galleries Section (portfolio) -->
+    <section id="galleries">
+        <div class="container">
+            <h2>GALLERIES</h2>
+            <p class="section-subtitle">A selection of featured categories — click through for detail pages.</p>
+
+            <div class="portfolio-grid">
+                <a class="portfolio-item" href="/r2/galleries/blacklight.html">
+                    <div class="portfolio-image"><img
+                            src="/images/BlacklightPainting/crop/Feature_TDSJourneyMushroom_Crop.jpg" alt="Blacklight">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Blacklight Painting</h3>
+                        <p>UV-reactive murals and effects.</p>
+                    </div>
+                </a>
+
+                <a class="portfolio-item" href="/r2/galleries/murals.html">
+                    <div class="portfolio-image"><img
+                            src="/images/MuralAndTrompeLoeil/crop/Feature_SydsRoom_IMG_1569_Crop.jpg" alt="Murals">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Murals & Trompe-l'oeil</h3>
+                        <p>Large-scale murals and trompe-l'oeil installations.</p>
+                    </div>
+                </a>
+
+                <a class="portfolio-item" href="/r2/galleries/industrial.html">
+                    <div class="portfolio-image"><img
+                            src="/images/CatalyzedIndustrialAutomotive/crop/Feature_CruiseLineDory_Crop.jpg"
+                            alt="Industrial"></div>
+                    <div class="portfolio-content">
+                        <h3>Industrial & Automotive</h3>
+                        <p>Catalyzed, high-performance finishes.</p>
+                    </div>
+                </a>
+
+                <a class="portfolio-item" href="/r2/galleries/personal.html">
+                    <div class="portfolio-image"><img
+                            src="/images/PersonalWork/crop/Feature_FamilyTree_IMG_0109_Crop.jpg" alt="Personal Work">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>Personal Work</h3>
+                        <p>Selected personal projects and experiments.</p>
+                    </div>
+                </a>
+
+                <a class="portfolio-item" href="/r2/galleries/media.html">
+                    <div class="portfolio-image"><img src="https://img.youtube.com/vi/aaLtENeKJLk/hqdefault.jpg"
+                            alt="As Seen on TV">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3>As Seen on TV</h3>
+                        <p>Industry media appearances by Kirsten recognizing her, her team and their work.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications (services-like tiles) -->
+    <section id="certs">
+        <div class="container">
+            <h2>Training, Certifications and other Recognitition</h2>
+            <p class="section-subtitle">Professional certifications and industry training and awards supporting our
+                craft.</p>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Certifications</h3>
+                    <p>Technical and safety certifications attained.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Organizational Memberships</h3>
+                    <p>Industry associations maintained.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Other Accoldates, Awards</h3>
+                    <p>Recognition by the industry for work completed in the industry.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About / Team -->
+    <section id="about">
+        <div class="container">
+            <h2>OUR TEAM</h2>
+            <p class="section-subtitle">KirPaint, Inc. Elevating themed environments through art direction and scenic
+                expertise.</p>
+            <p>KirPaint Inc., founded in 2010 by visionary artist Kirsten Ruhs, is a premier company
+                specializing in
+                Art Direction and Scenic Paint for Themed Environments. </p>
+            <p>At KirPaint Inc., we don’t just create environments; we transform them into immersive, captivating
+                experiences. Ms. Ruhs’ leadership and artistic vision drive our success, attracting world-class
+                talent and ensuring unparalleled results. </p>
+
+            <div class="team-grid">
+                <!-- Kirsten tile: content sourced from root site about.htm -->
+                <div id="kirsten" class="team-member feature">
+                    <div class="feature-media">
+                        <img src="/images/ShowSetAndPropPainting/Feature_DLAnaheimHoney.jpg"
+                            alt="Feature DLAnaheim Honey">
+                    </div>
+                    <div class="feature-content">
+                        <div class="team-avatar"><img id="kirsten-avatar"
+                                src="/images/TheCrew/crop/Feature_HKCrew_IMG0630_Crop.jpg"
+                                data-srcs='["/images/TheCrew/crop/Feature_HKCrew_IMG0630_Crop.jpg","/images/team/kirsten.jpg"]'
+                                alt="Kirsten Ruhs"></div>
+                        <h3>Kirsten Ruhs</h3>
+                        <p class="role">Owner & Sr. Project Development Director — Art Direction, Themed Finishes</p>
+                        <p>With nearly three decades of in-house experience at Walt Disney Imagineering (WDI) and
+                            Universal Creative, Kirsten brings unparalleled expertise to every project.
+                        </p> <br>
+                        <p><strong>Key highlights:</strong></p>
+                        <ul>
+                            <li><strong>Global Impact:</strong> Kirsten’s work spans all six Disney Theme Parks and all
+                                five Universal Theme Park locations worldwide. Her commitment to product quality,
+                                process excellence, research & development, and documentation ensures creative intent
+                                while respecting maintenance concerns for the best long term quality product.</li>
+                            <li><strong>Interdisciplinary Leadership:</strong> As Sr. Director – Production Art & Design
+                                at Universal Creative, Kirsten led the Themed Finishes Team for the Universal Beijing
+                                Resort. Her hands-on approach, combined with a strategic view, inspired her team to
+                                deliver exceptional results seamlessly uniting all aspects of themed paint, color
+                                design, rockwork & facades, and hardscape.</li>
+                            <li><strong>Craftsmanship and Vision:</strong> Kirsten bridges the gap between concept and
+                                execution. Her involvement spans from colorboard phase to installation, maintenance,
+                                and refurbishment. She is an expert in mock-ups, samples, models, and specialty
+                                finishes.</li>
+                            <li><strong>Industry Network:</strong> Kirsten maintains extensive contacts across the
+                                Theming Industry, including fabrication vendors, individual artists, and maintenance
+                                teams at various theme parks. Her global reach ensures access to the best resources
+                                and materials.</li>
+                        </ul>
+                    </div>
+                </div>
 
 
-<div class="text" id="main">
-  <div id="title"><img src="images/images/header.jpg" alt="KirPaint Kirsten Scenic Art Home and Galleries Selector"
-      width="775" height="183" /></div>
-  <div id="navcontainer">
-    <ul id="navlist">
+                <div class="team-row-squares">
+                    <div id="Sarah" class="team-member small">
+                        <div class="team-avatar"><img src="/images/team/SarahAdams.jpg" alt="Sarah Adams"></div>
+                        <h3>Sarah Adams</h3>
+                        <p class="role">Production Art Director</p>
+                        <p>Sarah was a key player on Kirsten's in-house Themed Finishes teams for Universal Beijing,
+                            Epic Universe and DreamWorks Land. Her hands-on experience with both project management
+                            and production art direction bring proven skills to every project she joins. Sarah holds a
+                            Master’s degree in Themed Environments
+                            Integration from the University of Florida and a Bachelor of Fine Arts in Theatre Design &
+                            Production from the University of Michigan.</p>
+                    </div>
 
+                    <div id="Dove" class="team-member small">
+                        <div class="team-avatar"><img src="/images/team/DoveDay.jpg" alt="Dove Day"></div>
+                        <h3>Dove Day</h3>
+                        <p class="role">Production Art Director, Associate</p>
+                        <p>Dove played a key role on Kirsten’s Themed Finishes team for DreamWorks Land, contributing
+                            both artistry and technical expertise. A seasoned scenic and emerging art director, she
+                            builds on her training at Valencia College and her degree in Themed Entertainment Design
+                            with a focus on Production Design – Scenic Painting. Her experience spans multiple shops and
+                            venues across the Orlando area, where she has continued to refine her craft and leadership.
+                        </p>
+                    </div>
+                </div>
 
-      <li><a href="index.html" class="active"><img src="images/images/home.png" alt="Home">Galleries</a></li>
-      <li><a href="certs.htm">Certifications</a></li>
-      <li><a href="about.htm">About</a></li>
-    </ul>
-    <hr>
-  </div>
+                <div id="marc" class="team-member">
+                    <div class="team-avatar"><img src="/images/team/mes.jpg"
+                            data-srcs='["/images/team/mes.jpg","/images/team/marc.jpg"]' alt="Marc Seinfeld"></div>
+                    <h3>Marc Seinfeld</h3>
+                    <p class="role">Director of Business Operations & Shop Foreman</p>
 
-  <body>
+                    <p>Anchoring the team, often behind the scenes, Marc handles KirPaint's:</p>
+                    <div class="centered-list">
+                        <ul>
+                            <li>Backoffice operations</li>
+                            <li>Tools selection, acquisition, and maintenance</li>
+                            <li>Data acquisition and analysis</li>
+                        </ul>
+                    </div>
 
-    <h1>
-      <span class="subhead"><strong>Select a KirPaint gallery to explore in more detail:</strong></span>
-    </h1>
+                    <p>He draws on his alter-ego as a passionate software engineering manager with a wealth of
+                        experience designing and delivering innovative solutions for several of that industry's
+                        legends.</p>
+                    <br>
+                    <!-- replaced paragraph with accessible accordion -->
+                    <div class="bio-accordion" aria-labelledby="marc-bio-summary">
+                        <p id="marc-bio-summary">
+                            <span class="bio-summary">Marc Seinfeld is a creative technologist, and security innovator
+                                with a career spanning more than two decades at Microsoft.</span>
+                            <button class="bio-toggle" aria-expanded="false" aria-controls="marc-bio-details"
+                                aria-label="Expand biography">+</button>
+                        </p>
 
-    <table cellpadding="3">
-      <tr>
-        <td>Blacklight Work Gallery</td>
-        <td>Industrial Automotive Finishes</td>
-        <td>Faux and Specialty Finishes</td>
-        <td>Show Set and Prop</td>
-      </tr>
-      <tr>
-        <td><a href="Gallery-Blacklight.htm" title="Blacklight Work"><img
-              src="images/BlacklightPainting/crop/Feature_TDSJourneyMushroom_Crop.jpg" alt="Blacklight Work" width="250"
-              height="250" /></a></td>
-        <td><a href="Gallery-CatalyzedIndustrialAutomotive.htm"
-            title="High Performance, Catalyzed, Industrial Automotive Finishes"><img
-              src="images/CatalyzedIndustrialAutomotive/crop/Feature_CruiseLineDory_Crop.jpg"
-              alt="High Performance, Catalyzed, Industrial Automotive Finishes" width="250" height="250"
-              border="0" /></a></td>
-        <td><a href="Gallery-FauxAndSpecialtyPainting.htm" title="Faux and other Specialty Finishes"><img
-              src="images/FauxAndSpecialtyPainting/crop/Feature_LAXEncounter_Crop.jpg"
-              alt="Faux and other Specialty Finishes" width="250" height="250" border="0" /></a></td>
-        <td><a href="Gallery-ShowSetAndPropPainting.htm" title="Show Set and Prop Painting"><img
-              src="images/ShowSetAndPropPainting/crop/Feature_DLAnaheimHoney_Crop.jpg" alt="Show Set and Prop Painting"
-              width="250" height="250" border="0" /></a></td>
-      </tr>
-      <tr>
-        <td> </td>
-        <td> </td>
-        <td> </td>
-        <td> </td>
-      </tr>
-      <tr>
-        <td>Figure Finishing</td>
-        <td>Belly Casts</td>
-        <td>Models, Colorboards and Comps</td>
-        <td>The Crew</td>
-      </tr>
-      <tr>
-        <td><a href="Gallery-FigureFinishing.htm" title="Figure Finishing"><img
-              src="images/FigureFinishing/crop/Feature_HKAdvCroc_Crop.jpg" alt="Figure Finishing" width="250"
-              height="250" border="0" /></a></td>
-        <td><a href="Gallery-BellyCasts.htm"
-            title="Belly Casts - A celebration of the female form in late stage pregnancy"><img
-              src="images/BellyCasts/crop/Feature_KirSarahCast_IMG_5118_M_Crop.jpg"
-              alt="Belly Casts - A celebration of the female form in late stage pregnancy" width="250" height="250"
-              border="0" /></a></td>
-        <td><a href="Gallery-ModelsColorboardsComps.htm" title="Models and Colorboards"><img
-              src="images/ModelsColorboardsComps/crop/Feature_SindbadOnBoat_Crop.jpg" alt="Models and Colorboards"
-              width="250" height="250" border="0" /></a></td>
-        <td><a href="Gallery-TheCrew.htm" title="The Crew"><img
-              src="images/TheCrew/crop/Feature_HKCrew_IMG0630_Crop.jpg" alt="The Crew" width="250" height="250"
-              border="0" /></a></td>
-      </tr>
-      <tr>
-        <td> </td>
-        <td> </td>
-        <td> </td>
-        <td> </td>
-      </tr>
-      <tr>
-        <td>Murals and Trompe-l'œil</td>
-        <td>Personal Work</td>
-        <td>Rockwork</td>
-        <td>The Shop</td>
-      </tr>
-      <tr>
-        <td><a href="Gallery-MuralAndTrompeLoeil.htm" title="Murals and Trompe l'oeil"><img
-              src="images/MuralAndTrompeLoeil/crop/Feature_SydsRoom_IMG_1569_Crop.jpg" alt="Murals and Trompe l'oeil"
-              width="250" height="250" border="0" /></a></td>
-        <td><a href="Gallery-PersonalWork.htm" title="Personal Work"><img
-              src="images/PersonalWork/crop/Feature_FamilyTree_IMG_0109_Crop.jpg" alt="Personal Work" width="250"
-              height="250" border="0" /></a></td>
-        <td><a href="Gallery-RockworkPainting.htm" title="Rockwork Painting"><img
-              src="images/RockworkPainting/crop/Feature_TDSMermaidUrsulasCave_Crop.jpg" alt="Rockwork Painting"
-              width="250" height="250" border="0" /></a></td>
-        <td><a href="Gallery-TheShop.htm" title="The Shop"><img src="images/TheShop/crop/Feature_IMG_2688_Crop.jpg"
-              alt="The Shop" width="250" height="250" border="0" /></a></td>
-      </tr>
-    </table>
+                        <div id="marc-bio-details" class="bio-details" hidden>
+                            <p>He played a pivotal role leading teams and driving their formative work in global
+                                corporate email systems, mobile connectivity and core antivirus protection technology,
+                                resulting in <a
+                                    href="https://patentscope.wipo.int/search/en/result.jsf?_qid=7f648cb5-c1a2-44c8-ab56-98adbbed6d97">ample
+                                    global Patent filings</a>. These in turn have been <a
+                                    href="https://scholar.google.com/citations?hl=en&user=-8J17sAAAAAJ">cited thousands
+                                    of times</a> in subsequent domain related filings (additional <a
+                                    href="https://typeset.io/authors/marc-e-seinfeld-2azhxt5bbj">SCISPACE citations
+                                    reference</a>). The core AV team he founded, along with the security technology they
+                                pursued, continues to provide a foundational role securing hundreds of millions of <a
+                                    href="https://www.windowscentral.com/more-14-billion-devices-now-run-windows-11-or-10">(recent
+                                    tallies acrrue ~1.4B)</a> Windows workstations. Further, backend integration extends
+                                the protective impact to countless additional users across Microsoft's major global
+                                cloud services, including Outlook.com, OneDrive, and Azure.</p>
+                        </div>
+                    </div>
+                    <br>
+                    <p>
+                        He holds a B.A. in Economics from Duke University, where he
+                        also rowed bow seat for their <a href="/marc/DukeCrew.htm">lightweight
+                            8 crew</a>. He's an avid diver having logged over 300 dives, or more than 9
+                        days bottom time beneath seawater. In the time honored tradition of shade tree mechanic, he can
+                        often be found
+                        tinkering on his <a href="/marc/53ChevPU.htm">daily driver</a>, or in
+                        recent
+                        months <a href="/marc/MarcsProducts.htm#coffee-espresso-ritual">pulling a shot of espresso</a>.
+                        <br></br>
+                    <p>**Global impact, local focus, and an enduring drive to build what’s next... along with knowing
+                        sometimes
+                        that requires rebuilding something timeless.**</p>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <p><b>Disney</b> work pictured is copyrighted by <b>Disney</b> and is not the property of KirPaint, Inc.
-      <br>Kirsten is honored to have been a part of a broad spectrum of <b>Disney</b>
-      projects.
-      <br><b>KirPaint, Inc.</b> hopes to
-      convey the involvement it had in such works through use of captions.
-      <br>It must be noted that <b>Disney</b> projects involve many people and the magic
-      created is produced through the teamwork of many people and disciplines.
-    </p>
-    <br />
+    <!-- Contact -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>CONTACT</h2>
+            <p class="section-subtitle">For project inquiries and commissions.</p>
+            <div class="contact-info">
+                <p>Please send us an email at kir((at))kirpaint((dot))com and/or marc((at))kirpaint((dot))com</p>
+            </div>
+        </div>
+    </section>
 
-    <p><span class="subhead"><strong>Contact and Follow us:</strong></span></p>
-    <p>please send us an email at kir((at))kirpaint((dot))com </p>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; KirPaint | All Rights Reserved | Website Created by <a href="https://merware.com">MerWare</a></p>
+        </div>
+    </footer>
 
-    <a href="https://www.facebook.com/pages/KirPaint-Inc/201275556613753#!/pages/KirPaint-Inc/201275556613753?sk=wall
-" target="_blank"><img style="border-style: none; border-width: 0px; margin: 4px; vertical-align: middle;"
-        alt="facebook" src="https://www.KirPaint.com/images/images/facebook.gif" width="35" height="34" /></a><br />
+    <script src="js/main.js"></script>
 
-    <a href="https://x.com/KirPaint" target="_blank"><img
-        style="border-style: none; border-width: 0px; margin: 4px; vertical-align: middle;" alt="twitter"
-        src="https://www.KirPaint.com/images/images/x.png" width="36" height="36" /></a><br />
+    <!-- accordion behavior -->
+    <script>
+        (function () {
+            function togglePanel(btn) {
+                const id = btn.getAttribute('aria-controls');
+                const panel = document.getElementById(id);
+                if (!panel) return;
 
-    <a href="https://www.linkedin.com/in/kirsten-ruhs-6563092"" target=" _blank">
-      <img style="border-style: none; border-width: 0px; margin: 4px; vertical-align: middle;" alt="linkedin"
-        src="https://www.KirPaint.com/images/images/linkedin.png" width="35" height="34" /></a><br />
-    <p>
+                const expanded = btn.getAttribute('aria-expanded') === 'true';
+                if (expanded) {
+                    btn.setAttribute('aria-expanded', 'false');
+                    btn.textContent = '+';
+                    panel.style.maxHeight = panel.scrollHeight + 'px';
+                    requestAnimationFrame(() => { panel.style.maxHeight = '0'; });
+                    function onEnd() {
+                        panel.setAttribute('hidden', '');
+                        panel.classList.remove('show');
+                        panel.removeEventListener('transitionend', onEnd);
+                    }
+                    panel.addEventListener('transitionend', onEnd);
+                } else {
+                    btn.setAttribute('aria-expanded', 'true');
+                    btn.textContent = '−';
+                    panel.classList.add('show');
+                    panel.removeAttribute('hidden');
+                    panel.style.maxHeight = panel.scrollHeight + 'px';
+                }
+            }
 
-</div>
+            document.addEventListener('click', function (e) {
+                const btn = e.target.closest('.bio-toggle');
+                if (!btn) return;
+                togglePanel(btn);
+            });
 
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    const btn = document.activeElement;
+                    if (btn && btn.classList && btn.classList.contains('bio-toggle')) {
+                        e.preventDefault();
+                        togglePanel(btn);
+                    }
+                }
+            });
+        })();
+    </script>
+
+    <script>
+        // Ensure contact background is applied (fallback for cascade issues)
+        (function () {
+            const contact = document.getElementById('contact');
+            if (!contact) return;
+            const computed = window.getComputedStyle(contact).backgroundImage;
+            if (!computed || computed === 'none') {
+                contact.style.background = "url('/images/BlacklightPainting/crop/TDSMermaiddetail_Crop.jpg') center/cover no-repeat fixed";
+            }
+        })();
+    </script>
+
+    <script>
+        // Lightweight case-insensitive fragment handler so both #Marc and #marc work
+        (function () {
+            function handleFragment(hash) {
+                if (!hash) return;
+                const raw = hash.replace(/^#/, '');
+                if (!raw) return;
+
+                let target = document.getElementById(raw);
+                if (target) {
+                    try { history.replaceState(null, '', '#' + target.id); } catch (e) { }
+                    return;
+                }
+
+                target = Array.from(document.querySelectorAll('[id]')).find(e => e.id.toLowerCase() === raw.toLowerCase());
+                if (target) {
+                    target.scrollIntoView({ behavior: 'auto', block: 'start' });
+                    try { history.replaceState(null, '', '#' + target.id); } catch (e) { }
+                }
+            }
+
+            window.addEventListener('hashchange', () => handleFragment(location.hash));
+            document.addEventListener('DOMContentLoaded', () => handleFragment(location.hash));
+        })();
+    </script>
+
+    <script>
+        (function () {
+            var imgs = document.querySelectorAll('.team-avatar img[data-srcs]');
+            if (!imgs || !imgs.length) return;
+            imgs.forEach(function (img) {
+                try {
+                    var data = img.getAttribute('data-srcs');
+                    var arr = data ? JSON.parse(data) : [];
+                    if (Array.isArray(arr) && arr.length) {
+                        var choice = arr[Math.floor(Math.random() * arr.length)];
+                        if (choice) img.src = choice;
+                    }
+                } catch (e) { /* ignore parse errors */ }
+            });
+        })();
+    </script>
+
+</body>
 
 </html>
