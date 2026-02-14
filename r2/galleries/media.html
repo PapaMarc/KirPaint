@@ -94,6 +94,38 @@
         })();
     </script>
 
+    <!--
+            TEMP HACK: remove the problematic 5th gallery item (index 4) at runtime.
+            Reason: `r2/data/media.json` contains a duplicated YouTube entry; the
+            occurrence rendered at gallery position 5 reliably starts at the wrong
+            time (it appears to reuse an earlier slide's iframe/slot). The duplicate
+            later in the list (position 6) plays correctly. The proper fix is to
+            remove the duplicate from `r2/data/media.json`; this non-destructive
+            mitigation simply removes the 5th anchor so the working duplicate
+            remains visible.
+        -->
+    <script>
+        (function () {
+            // Wait briefly after DOMContentLoaded to allow the gallery fetch/populate to complete.
+            document.addEventListener('DOMContentLoaded', function () {
+                try {
+                    setTimeout(function () {
+                        try {
+                            var anchors = document.querySelectorAll('#media-gallery a.glightbox, #media-gallery a');
+                            if (anchors && anchors.length > 4) {
+                                var bad = anchors[4];
+                                if (bad && bad.parentNode) {
+                                    bad.parentNode.removeChild(bad);
+                                    console.log('r2: removed duplicate problematic gallery item at index 4');
+                                }
+                            }
+                        } catch (e) { }
+                    }, 300);
+                } catch (e) { }
+            });
+        })();
+    </script>
+
     <script src="../glightbox/glightbox-init.js"></script>
 </body>
 
