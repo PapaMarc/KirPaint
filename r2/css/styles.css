@@ -195,6 +195,34 @@ h2 {
   color: var(--muted);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .portfolio-item,
+  .service-card {
+    transition:
+      transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 180ms;
+    transform-origin: center bottom;
+    will-change: transform;
+  }
+
+  .portfolio-item:hover,
+  .portfolio-item:focus,
+  .service-card:hover,
+  .service-card:focus {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-item,
+  .service-card {
+    transition: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}
+
 /* Team */
 .team-grid {
   display: grid;
