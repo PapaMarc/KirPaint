@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>KirPaint</title>
+</head>
+
+<body>
+    <h1>Coming Soon</h1>
+    We're working hard to bring you an amazing experience. Stay tuned for updates!
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js">
+    // additional samples here: https://confetti.js.org/more.html
+</script>
+
+<script>
+    function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    confetti({
+        angle: randomInRange(55, 125),
+        spread: randomInRange(50, 70),
+        particleCount: randomInRange(50, 100),
+        origin: { y: 0.6 },
+    });
+</script>
