@@ -5,26 +5,55 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>KirPaint</title>
+    <link rel="stylesheet" href="../glightbox/glightbox.min.css">
+    <link rel="stylesheet" href="../glightbox/glightbox.custom.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body>
-    <h1>Coming Soon</h1>
-    Curating content to stimulate cerebral cortexes far and wide! Stai attentivo :-)
+    <nav class="topnav">
+        <div class="container nav-inner">
+            <a class="logo" href="/">KirPaint</a>
+            <a class="logo" href="/index.html">← Back</a>
+        </div>
+    </nav>
+
+    <header class="hero-hero"
+        style="background-image:url('/images/BlacklightPainting/crop/Feature_TDSJourneyMushroom_Crop.jpg')">
+        <div class="container">
+            <h1>Coming Soon</h1>
+            <p class="lead">Curating content <br>to stimulate cerebral cortexes far and wide!
+            </p>
+        </div>
+    </header>
+
+    <main>
+        <h2>Stai attentivo :-)</h2>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; KirPaint | All Rights Reserved | Website Created by <a href="https://merware.com">MerWare</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js">
+        // additional samples here: https://confetti.js.org/more.html
+    </script>
+
+    <script>
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        confetti({
+            angle: randomInRange(55, 125),
+            spread: randomInRange(50, 70),
+            particleCount: randomInRange(50, 100),
+            origin: { y: 0.6 },
+        });
+    </script>
+
 </body>
 
-<script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js">
-    // additional samples here: https://confetti.js.org/more.html
-</script>
-
-<script>
-    function randomInRange(min, max) {
-        return Math.random() * (max - min) + min;
-    }
-
-    confetti({
-        angle: randomInRange(55, 125),
-        spread: randomInRange(50, 70),
-        particleCount: randomInRange(50, 100),
-        origin: { y: 0.6 },
-    });
-</script>
+</html>
