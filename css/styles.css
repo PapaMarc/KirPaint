@@ -463,6 +463,50 @@ section#contact.contact-section {
   font-size: 1.15rem;
   margin-top: 18px;
 }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: start;
+  margin-top: 12px;
+}
+
+.contact-person-kir {
+  grid-column: 2;
+}
+
+.contact-person-marc {
+  grid-column: 4;
+}
+
+.contact-email {
+  margin-bottom: 10px;
+}
+
+.contact-icons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.contact-icons img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+@media (max-width: 800px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .contact-person-kir,
+  .contact-person-marc {
+    grid-column: auto;
+  }
+}
+
 footer {
   background: rgba(0, 40, 85, 0.98);
   color: rgba(255, 255, 255, 0.9);
