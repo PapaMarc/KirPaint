@@ -1,3 +1,8 @@
+// SEARCH NOTE: "ToBeDeleted-- <PhotoSwipe> or <getElementById("year")> noLongerInUse"
+// appears in two commented regions below:
+// 1) `getElementById("year")` block in the DOMContentLoaded helper
+// 2) Legacy PhotoSwipe sizing/mutation observer block near end of file
+
 // Mobile nav drawer + general helpers for r2
 (function () {
   const nav = document.querySelector(".topnav");
@@ -161,8 +166,10 @@
 
 // Interactive helpers for r2 index: year and smooth scroll
 document.addEventListener("DOMContentLoaded", function () {
+  /* ToBeDeleted-- <PhotoSwipe> or <getElementById("year")> noLongerInUse
   var y = document.getElementById("year");
   if (y) y.textContent = new Date().getFullYear();
+  */
 
   // Smooth scrolling for in-page anchors
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
@@ -176,6 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+/* ToBeDeleted-- <PhotoSwipe> or <getElementById("year")> noLongerInUse
 // PhotoSwipe sizing and UI adjustments: ensure captions have room and images fit on small screens
 (function () {
   function adjustPhotoswipeSizing() {
@@ -208,3 +216,4 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(adjustPhotoswipeSizing, 120),
   );
 })();
+*/
