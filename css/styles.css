@@ -479,6 +479,13 @@ section#contact.contact-section {
   grid-column: 4;
 }
 
+.contact-audio {
+  grid-column: 3;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 .contact-email {
   margin-bottom: 10px;
 }
@@ -502,7 +509,8 @@ section#contact.contact-section {
   }
 
   .contact-person-kir,
-  .contact-person-marc {
+  .contact-person-marc,
+  .contact-audio {
     grid-column: auto;
   }
 }

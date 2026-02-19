@@ -1,0 +1,81 @@
+.playButton {
+  --ry: 0deg;
+  position: relative;
+  --clr: #667eea;
+  display: inline-block;
+  width: 84px;
+  height: 44px;
+  border-radius: 10% / 20%;
+  background-color: var(--clr);
+  perspective: 320px;
+  cursor: pointer;
+  vertical-align: middle;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition:
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.playButton:focus-visible {
+  outline: 2px solid #3355cc;
+  outline-offset: 3px;
+}
+
+.playButton .icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 48px;
+  height: 28px;
+  transform: translate(-50%, -50%) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.playButton .face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+}
+
+.playButton .face.play::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 24px solid #fff;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  filter: drop-shadow(0 1px 0 #0002);
+}
+
+.playButton .face.pause {
+  transform: rotateY(180deg);
+  gap: 4px;
+}
+
+.playButton .face.pause .bar {
+  width: 10px;
+  height: 22px;
+  background: #fff;
+  margin: 0 3px;
+  display: inline-block;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 #0004 inset;
+}
+
+.playButton[aria-pressed="true"] {
+  background-color: #3355cc;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+.playButton[aria-pressed="true"] .icon {
+  transform: translate(-50%, -50%) rotateY(180deg);
+}

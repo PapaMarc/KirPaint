@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>KirPaint: Elevating Themed Environments</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/audio-toggle.css">
 
     <!-- added: small accordion styles -->
     <style>
@@ -322,7 +323,7 @@
             <h2>CONTACT</h2>
             <p class="section-subtitle">For project inquiries and commissions.</p>
             <div class="contact-info">
-                <p>Please connect with us:</p>
+                <p>Please connect with us... and allow KirPaint's theme song to entrance your senses:</p>
                 <div class="contact-grid">
                     <div class="contact-person contact-person-kir">
                         <p class="contact-email">kir((at))kirpaint((dot))com</p>
@@ -334,6 +335,16 @@
                             <a href="https://www.instagram.com/kirpaintinc" target="_blank" rel="noopener"><img
                                     src="/images/icons/instagram.png" alt="Instagram"></a>
                         </div>
+                    </div>
+
+                    <div class="contact-audio">
+                        <button id="bg-toggle" type="button" class="playButton" aria-pressed="false"
+                            aria-label="Play background audio" title="Play / Pause">
+                            <span class="icon" aria-hidden="true">
+                                <span class="face play"></span>
+                                <span class="face pause"><span class="bar"></span><span class="bar"></span></span>
+                            </span>
+                        </button>
                     </div>
 
                     <div class="contact-person contact-person-marc">
@@ -359,7 +370,12 @@
         </div>
     </footer>
 
+    <audio id="bg-audio" preload="none" loop hidden aria-hidden="true">
+        <source src="https://merware.net/merware/resources/paint.mp3" type="audio/mpeg">
+    </audio>
+
     <script src="js/main.js"></script>
+    <script src="js/audio-toggle.js"></script>
 
     <!-- accordion behavior -->
     <script>
