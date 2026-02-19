@@ -286,3 +286,28 @@ The `/r2` folder contains the modernized site. The existing site remains untouch
 -consider Adding an automated generator to precompute and store each gallery image’s intrinsic width/height in `r2/data/<gallery>.json` (via a Node script run whenever images change) so PhotoSwipe can open immediately without runtime size measurements, eliminating extra background loads and speeding initial opens.
 
 - Eventually, when ready to cut over and confident in the new site, i intend to archive the old site and promote `/r2` to root.
+
+# Post R2 cut over...
+
+have cut over as of ~midFeb 2026. Now the modernized site is primary. other stuff is archived. some R2 testing/validation still occurs as well.
+(so haven't yet removed lightbox for old archived site, nor node_modules utilities, nor r2 dir and subdirs )
+
+## 1. dead code removal
+
+eg. Please run an unused CSS and JS audit (dead code analysis), identify selectors/functions not referenced by current pages, and provide a safe cleanup list. Do not make any changes yet; just provide suggestions of changes that could/should be made and prioritized w/respect to simple bloat factor v potential runtime issues v. potential security issue.
+i'd like this specifically for the KirPaint new site which includes the root index.html which is open, coming soon.html, the about.htm redirrect and the files in css, data, galleries, glightbox, images and js. not node modules, and not r2
+
+-P1 **\<COMPLETED\>** Security/runtime: Replace or self-host external confetti script in comingsoon.html:40 (third-party CDN script execution risk; also unnecessary blocking payload for a placeholder page).
+
+**\<These 2 below are a hack workaround for glightbox not starting video#5 at the proper time\>**
+-P1 Runtime correctness: Remove the temporary “delete 5th gallery item” hack in media.html:99-129 after deduping data; it currently masks duplicate content instead of fixing source data.
+-P1 Data hygiene: Remove duplicate entry in media.json (last two objects are identical).
+**\<These 2 above are a hack workaround for glightbox not starting video#5 at the proper time\>**
+
+-P2 **\<COMPLETED\>** Runtime bloat: Remove legacy PhotoSwipe block in main.js:181-210; current in-scope pages do not render any .pswp markup.
+-P2 **\<COMPLETED\>** Minor dead JS: Remove unused year updater in main.js:164-166 (no id="year" exists in scoped pages).
+
+**\<These 2 below are legacy stuff for old site that i'll probably remove at some point\>**
+-P2 CSS dead block: Remove legacy custom lightbox styles in styles.css:640 (no in-scope page creates .lightbox/.lightbox-content DOM).
+-P3 File cleanup: blacklight_oldSchoolLightbox.json appears unreferenced by scoped pages and can be archived/deleted.
+**\<These 2 above are legacy stuff for old site that i'll probably remove at some point\>**
