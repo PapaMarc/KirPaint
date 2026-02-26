@@ -27,13 +27,16 @@
     var group = item.group
       ? '<span class="cred-group"> (' + escapeHtml(item.group) + ")</span>"
       : "";
+    var levelClass = item.outlineLevel === 2 ? ' class="cred-outline-2"' : "";
 
     if (
       (item.type === "link" && item.url) ||
       (item.type === "image" && (item.full || item.thumb))
     ) {
       return (
-        '<li><a href="#" class="cred-open-item" data-section="' +
+        "<li" +
+        levelClass +
+        '><a href="#" class="cred-open-item" data-section="' +
         escapeHtml(section) +
         '" data-index="' +
         String(index) +
@@ -45,7 +48,7 @@
       );
     }
 
-    return "<li>" + title + group + "</li>";
+    return "<li" + levelClass + ">" + title + group + "</li>";
   }
 
   function toLightboxElements(items, section) {
