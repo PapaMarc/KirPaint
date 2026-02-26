@@ -22,6 +22,24 @@
     return SECTION_ORDER.indexOf(raw) >= 0 ? raw : "";
   }
 
+  function updateActiveNavButton(selectedSection) {
+    var navLinks = document.querySelectorAll(".credentials-nav a[href^='#']");
+    if (!navLinks || !navLinks.length) return;
+
+    navLinks.forEach(function (link) {
+      var hash = (link.getAttribute("href") || "")
+        .replace(/^#/, "")
+        .toLowerCase();
+      var isActive = !!selectedSection && hash === selectedSection;
+      link.classList.toggle("is-active", isActive);
+      if (isActive) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
+
   function itemToListMarkup(item, section, index) {
     var title = escapeHtml(item.title || "Untitled");
     var group = item.group
@@ -171,6 +189,7 @@
       .then(function (data) {
         var selectedSection = normalizeSectionFromHash();
         render(data, selectedSection);
+        updateActiveNavButton(selectedSection);
 
         gridEl.addEventListener("click", function (event) {
           var itemLink = event.target.closest(".cred-open-item");
@@ -185,6 +204,7 @@
         window.addEventListener("hashchange", function () {
           var nextSection = normalizeSectionFromHash();
           render(data, nextSection);
+          updateActiveNavButton(nextSection);
         });
       })
       .catch(function (err) {
