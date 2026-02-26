@@ -87,6 +87,7 @@
         var linkCaption = item.group
           ? title + " (" + escapeHtml(item.group) + ")"
           : title;
+        var linkUrl = escapeHtml(item.url);
 
         return {
           title: "External Website",
@@ -94,8 +95,10 @@
           content:
             '<div class="cred-lightbox-card">' +
             '<p><a href="' +
-            escapeHtml(item.url) +
-            '" target="_blank" rel="noopener">Open full website in new tab</a></p>' +
+            linkUrl +
+            '" target="_blank" rel="noopener" class="cred-open-new-tab" data-url="' +
+            linkUrl +
+            '">Open full website in new tab</a></p>' +
             "</div>",
         };
       }
@@ -199,6 +202,24 @@
           var itemIndex = parseInt(itemLink.getAttribute("data-index"), 10);
           if (!itemSection || Number.isNaN(itemIndex)) return;
           openSectionGallery(itemSection, data, itemIndex);
+        });
+
+        document.addEventListener("click", function (event) {
+          var externalLink = event.target.closest(".cred-open-new-tab");
+          if (!externalLink) return;
+
+          event.preventDefault();
+          var url = externalLink.getAttribute("data-url") || externalLink.href;
+          if (!url) return;
+
+          window.open(url, "_blank", "noopener");
+
+          if (
+            lightboxInstance &&
+            typeof lightboxInstance.close === "function"
+          ) {
+            lightboxInstance.close();
+          }
         });
 
         window.addEventListener("hashchange", function () {
