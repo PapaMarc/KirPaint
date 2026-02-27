@@ -1,5 +1,6 @@
 (function () {
   var SECTION_ORDER = ["certs", "memberships", "accolades"];
+  var TEAM_ORDER = ["Kirsten", "Sarah", "Dove", "Marc"];
   var SECTION_LABELS = {
     certs: "Certifications",
     memberships: "Organizational Memberships",
@@ -67,6 +68,31 @@
     }
 
     return "<li" + levelClass + ">" + title + group + "</li>";
+  }
+
+  function certsListMarkup(items) {
+    var grouped = {};
+    TEAM_ORDER.forEach(function (name) {
+      grouped[name] = [];
+    });
+
+    (Array.isArray(items) ? items : []).forEach(function (item, index) {
+      var name = item && item.name ? String(item.name) : "";
+      if (TEAM_ORDER.indexOf(name) < 0) {
+        name = TEAM_ORDER[0];
+      }
+      grouped[name].push({ item: item, index: index });
+    });
+
+    return TEAM_ORDER.map(function (name) {
+      var nestedItems = grouped[name]
+        .map(function (entry) {
+          return itemToListMarkup(entry.item, "certs", entry.index);
+        })
+        .join("");
+
+      return "<li>" + escapeHtml(name) + "<ul>" + nestedItems + "</ul></li>";
+    }).join("");
   }
 
   function toLightboxElements(items, section) {
@@ -158,11 +184,14 @@
     var html = sectionsToRender
       .map(function (section) {
         var sectionItems = Array.isArray(data[section]) ? data[section] : [];
-        var listItems = sectionItems
-          .map(function (item, index) {
-            return itemToListMarkup(item, section, index);
-          })
-          .join("");
+        var listItems =
+          section === "certs"
+            ? certsListMarkup(sectionItems)
+            : sectionItems
+                .map(function (item, index) {
+                  return itemToListMarkup(item, section, index);
+                })
+                .join("");
 
         return (
           '<article id="section-' +
