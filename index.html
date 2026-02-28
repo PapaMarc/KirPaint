@@ -44,6 +44,35 @@
         .bio-accordion p {
             margin: 0;
         }
+
+        .name-cert-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .name-cert-row h3 {
+            margin: 0;
+        }
+
+        .cert-badges {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            flex-wrap: wrap;
+        }
+
+        .cert-badge {
+            display: inline-block;
+            line-height: 0;
+        }
+
+        .cert-badge img {
+            display: block;
+            width: 42px;
+            height: auto;
+        }
     </style>
 
 </head>
@@ -192,7 +221,15 @@
                                 src="/images/TheCrew/crop/Feature_HKCrew_IMG0630_Crop.jpg"
                                 data-srcs='["/images/TheCrew/crop/Feature_HKCrew_IMG0630_Crop.jpg","/images/team/kirsten.jpg"]'
                                 alt="Kirsten Ruhs"></div>
-                        <h3>Kirsten Ruhs</h3>
+                        <div class="name-cert-row">
+                            <h3>Kirsten Ruhs</h3>
+                            <span class="cert-badges">
+                                <a class="cert-badge" href="/credentials.html#certs"
+                                    aria-label="Kirsten certifications">
+                                    <img src="/images/certs/AMPP_Kir.png" alt="Kirsten certification badge">
+                                </a>
+                            </span>
+                        </div>
                         <p class="role">Owner & Sr. Project Development Director — Art Direction, Themed Finishes</p>
                         <p>With nearly three decades of in-house experience at Walt Disney Imagineering (WDI) and
                             Universal Creative, Kirsten brings unparalleled expertise to every project.
@@ -224,7 +261,9 @@
                 <div class="team-row-squares">
                     <div id="Sarah" class="team-member small">
                         <div class="team-avatar"><img src="/images/team/SarahAdams.jpg" alt="Sarah Adams"></div>
-                        <h3>Sarah Adams</h3>
+                        <div class="name-cert-row">
+                            <h3>Sarah Adams</h3>
+                        </div>
                         <p class="role">Production Art Director</p>
                         <p>Sarah was a key player on Kirsten's in-house Themed Finishes teams for Universal Beijing,
                             Epic Universe and DreamWorks Land. Her hands-on experience with both project management
@@ -236,7 +275,14 @@
 
                     <div id="Dove" class="team-member small">
                         <div class="team-avatar"><img src="/images/team/DoveDay.jpg" alt="Dove Day"></div>
-                        <h3>Dove Day</h3>
+                        <div class="name-cert-row">
+                            <h3>Dove Day</h3>
+                            <span class="cert-badges">
+                                <a class="cert-badge" href="/credentials.html#certs" aria-label="Dove certifications">
+                                    <img src="/images/certs/lst.png" alt="Dove certification badge">
+                                </a>
+                            </span>
+                        </div>
                         <p class="role">Production Art Director, Associate</p>
                         <p>Dove played a key role on Kirsten’s Themed Finishes team for DreamWorks Land, contributing
                             both artistry and technical expertise. A seasoned scenic and emerging art director, she
@@ -250,7 +296,14 @@
                 <div id="marc" class="team-member">
                     <div class="team-avatar"><img src="/images/team/mes.jpg"
                             data-srcs='["/images/team/mes.jpg","/images/team/marc.jpg"]' alt="Marc Seinfeld"></div>
-                    <h3>Marc Seinfeld</h3>
+                    <div class="name-cert-row">
+                        <h3>Marc Seinfeld</h3>
+                        <span class="cert-badges">
+                            <a class="cert-badge" href="/credentials.html#certs" aria-label="Marc certifications">
+                                <img src="/images/certs/lst.png" alt="Marc certification badge">
+                            </a>
+                        </span>
+                    </div>
                     <p class="role">Director of Business Operations & Shop Foreman</p>
 
                     <p>Anchoring the team, often behind the scenes, Marc handles KirPaint's:</p>
