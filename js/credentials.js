@@ -114,6 +114,14 @@
           ? title + " (" + escapeHtml(item.group) + ")"
           : title;
         var linkUrl = escapeHtml(item.url);
+        var altLinkUrl = item.alturl ? escapeHtml(item.alturl) : "";
+        var fallbackMarkup = altLinkUrl
+          ? '<p><a href="' +
+            altLinkUrl +
+            '" target="_blank" rel="noopener" class="cred-open-new-tab" data-url="' +
+            altLinkUrl +
+            "\">If the TEA THEA award URL isn't accessible, view it here on the Internet Archive's Wacky Wayback Machine.</a></p>"
+          : "";
 
         return {
           title: "External Website",
@@ -125,6 +133,7 @@
             '" target="_blank" rel="noopener" class="cred-open-new-tab" data-url="' +
             linkUrl +
             '">Open full website in new tab</a></p>' +
+            (fallbackMarkup ? "<br>" + fallbackMarkup : "") +
             "</div>",
         };
       }
