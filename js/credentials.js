@@ -41,12 +41,33 @@
     });
   }
 
+  function normalizeOutlineLevel(item) {
+    var parsed = parseInt(item && item.outlineLevel, 10);
+    if (Number.isNaN(parsed) || parsed < 1) return 1;
+    return parsed;
+  }
+
+  function normalizeBulletStyle(item) {
+    var raw =
+      item && item.bulletStyle ? String(item.bulletStyle).toLowerCase() : "";
+    var supported = ["disc", "circle", "square", "diamond", "none"];
+    return supported.indexOf(raw) >= 0 ? raw : "circle";
+  }
+
   function itemToListMarkup(item, section, index) {
     var title = escapeHtml(item.title || "Untitled");
     var group = item.group
       ? '<span class="cred-group"> (' + escapeHtml(item.group) + ")</span>"
       : "";
-    var levelClass = item.outlineLevel === 2 ? ' class="cred-outline-2"' : "";
+    var outlineLevel = normalizeOutlineLevel(item);
+    var classNames = [];
+    if (outlineLevel >= 2) {
+      classNames.push("cred-outline-2");
+      classNames.push("cred-bullet-" + normalizeBulletStyle(item));
+    }
+    var levelClass = classNames.length
+      ? ' class="' + classNames.join(" ") + '"'
+      : "";
 
     if (
       (item.type === "link" && item.url) ||
@@ -91,7 +112,13 @@
         })
         .join("");
 
-      return "<li>" + escapeHtml(name) + "<ul>" + nestedItems + "</ul></li>";
+      return (
+        '<li class="cred-person">' +
+        escapeHtml(name) +
+        "<ul>" +
+        nestedItems +
+        "</ul></li>"
+      );
     }).join("");
   }
 
