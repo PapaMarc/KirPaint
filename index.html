@@ -564,6 +564,11 @@
                 const raw = hash.replace(/^#/, '');
                 if (!raw) return;
 
+                if (raw.toLowerCase() === 'zelle') {
+                    window.location.replace('/payment.html');
+                    return;
+                }
+
                 let target = document.getElementById(raw);
                 if (target) {
                     try { history.replaceState(null, '', '#' + target.id); } catch (e) { }
