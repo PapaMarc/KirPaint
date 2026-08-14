@@ -3,6 +3,23 @@
 // 1) `getElementById("year")` block in the DOMContentLoaded helper
 // 2) Legacy PhotoSwipe sizing/mutation observer block near end of file
 
+// Hide any team member whose id is flagged disabled in js/team-config.js (single toggle point for index.html + credentials.html)
+(function () {
+  var teamGrid = document.querySelector(".team-grid");
+  if (!teamGrid || typeof TEAM_ENABLED === "undefined") return;
+
+  var lookup = {};
+  Object.keys(TEAM_ENABLED).forEach(function (name) {
+    lookup[name.toLowerCase()] = TEAM_ENABLED[name];
+  });
+
+  teamGrid.querySelectorAll(".team-member[id]").forEach(function (el) {
+    if (lookup[el.id.toLowerCase()] === 0) {
+      el.style.display = "none";
+    }
+  });
+})();
+
 // Mobile nav drawer + general helpers for r2
 (function () {
   const nav = document.querySelector(".topnav");

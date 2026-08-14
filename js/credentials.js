@@ -1,6 +1,11 @@
 (function () {
   var SECTION_ORDER = ["certs", "memberships", "accolades"];
-  var TEAM_ORDER = ["Kirsten", "Sarah", "Dove", "Marc"];
+  var TEAM_ENABLED = window.TEAM_ENABLED || {};
+  var FULL_TEAM_ORDER = ["Kirsten", "Sarah", "Dove", "Marc"];
+  // Single toggle point (js/team-config.js) controls which people's certs are grouped/rendered here.
+  var TEAM_ORDER = FULL_TEAM_ORDER.filter(function (name) {
+    return TEAM_ENABLED[name] !== 0;
+  });
   var SECTION_LABELS = {
     certs: "Certifications",
     memberships: "Organizational Memberships",
@@ -99,9 +104,10 @@
 
     (Array.isArray(items) ? items : []).forEach(function (item, index) {
       var name = item && item.name ? String(item.name) : "";
-      if (TEAM_ORDER.indexOf(name) < 0) {
-        name = TEAM_ORDER[0];
+      if (FULL_TEAM_ORDER.indexOf(name) < 0) {
+        name = FULL_TEAM_ORDER[0];
       }
+      if (TEAM_ORDER.indexOf(name) < 0) return; // person disabled via TEAM_ENABLED
       grouped[name].push({ item: item, index: index });
     });
 
