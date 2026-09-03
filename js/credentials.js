@@ -147,7 +147,26 @@
           ? title + " (" + escapeHtml(item.group) + ")"
           : title;
         var linkUrl = escapeHtml(item.url);
+        var previewSrc =
+          item.thumb || item.full ? escapeHtml(item.thumb || item.full) : "";
         var altLinkUrl = item.alturl ? escapeHtml(item.alturl) : "";
+        var openLinkMarkup =
+          '<p class="cred-link-actions"><a href="' +
+          linkUrl +
+          '" target="_blank" rel="noopener" class="cred-open-new-tab" data-url="' +
+          linkUrl +
+          '">Read the full article in new tab</a></p>';
+        var previewMarkup = previewSrc
+          ? '<p><a href="' +
+            linkUrl +
+            '" target="_blank" rel="noopener" class="cred-open-new-tab cred-link-preview" data-url="' +
+            linkUrl +
+            '"><img src="' +
+            previewSrc +
+            '" alt="' +
+            title +
+            '" class="cred-link-preview-image"></a></p>'
+          : "";
         var fallbackMarkup = altLinkUrl
           ? '<p><a href="' +
             altLinkUrl +
@@ -161,11 +180,8 @@
           description: linkCaption,
           content:
             '<div class="cred-lightbox-card">' +
-            '<p><a href="' +
-            linkUrl +
-            '" target="_blank" rel="noopener" class="cred-open-new-tab" data-url="' +
-            linkUrl +
-            '">Open full website in new tab</a></p>' +
+            openLinkMarkup +
+            previewMarkup +
             (fallbackMarkup ? "<br>" + fallbackMarkup : "") +
             "</div>",
         };
