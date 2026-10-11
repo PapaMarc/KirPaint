@@ -1,7 +1,7 @@
 (function () {
   var SECTION_ORDER = ["certs", "memberships", "accolades"];
   var TEAM_ENABLED = window.TEAM_ENABLED || {};
-  var FULL_TEAM_ORDER = ["Kirsten", "Sarah", "Dove", "Marc"];
+  var FULL_TEAM_ORDER = ["Kirsten", "Sarah", "Dove", "Sean", "Marc"];
   // Single toggle point (js/team-config.js) controls which people's certs are grouped/rendered here.
   var TEAM_ORDER = FULL_TEAM_ORDER.filter(function (name) {
     return TEAM_ENABLED[name] !== 0;
