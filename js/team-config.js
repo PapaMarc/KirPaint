@@ -3,6 +3,6 @@ window.TEAM_ENABLED = {
   Kirsten: 1,
   Sarah: 0,
   Dove: 0,
-  Sean: 0,
+  Sean: 1,
   Marc: 1,
 };

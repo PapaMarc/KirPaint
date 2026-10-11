@@ -276,6 +276,15 @@ h2 {
   margin-bottom: 12px;
 }
 
+.team-member .left-justified-list {
+  padding-left: 1.25rem;
+  text-align: left;
+}
+
+.team-member.small .left-justified-list {
+  align-self: stretch;
+}
+
 /* Featured team member: image left, text right (Kirsten special feature) */
 .team-member.feature {
   display: flex;
